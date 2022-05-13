@@ -224,6 +224,9 @@ public class PacketEventsPlugin extends JavaPlugin {
                 } else if (event.getPacketType() == PacketType.Play.Server.SPAWN_LIVING_ENTITY) {
                     WrapperPlayServerSpawnLivingEntity spawnLivingEntity = new WrapperPlayServerSpawnLivingEntity(event);
                     EntityType type = spawnLivingEntity.getEntityType();
+                } else if (event.getPacketType() == PacketType.Play.Server.ADVANCEMENTS) {
+                    WrapperPlayServerAdvancements wrapper = new WrapperPlayServerAdvancements(event);
+                    System.out.println(wrapper.toString());
                 }
             }
 
@@ -243,7 +246,7 @@ public class PacketEventsPlugin extends JavaPlugin {
                 System.out.println("User: (host-name) " + event.getUser().getAddress().getHostString() + " disconnected...");
             }
         };
-        //PacketEvents.getAPI().getEventManager().registerListener(listener);
+        PacketEvents.getAPI().getEventManager().registerListener(listener);
     }
 
     @Override
