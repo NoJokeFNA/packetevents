@@ -29,89 +29,89 @@ import java.util.Optional;
 import java.util.OptionalInt;
 
 public class WrapperPlayServerBlockEntityData extends PacketWrapper<WrapperPlayServerBlockEntityData> {
-  private Vector3i position;
-  private Optional<Action> action;
-  private OptionalInt type;
-  private Optional<byte[]> nbtData;
-  private Optional<NBTCompound> nbtCompound;
+    private Vector3i position;
+    private Optional<Action> action;
+    private OptionalInt type;
+    private Optional<byte[]> nbtData;
+    private Optional<NBTCompound> nbtCompound;
 
-  public WrapperPlayServerBlockEntityData(PacketSendEvent event) {
-    super(event);
-  }
-
-  public WrapperPlayServerBlockEntityData(Vector3i position, OptionalInt type, Optional<NBTCompound> nbtCompound) {
-    super(PacketType.Play.Server.BLOCK_ENTITY_DATA);
-    this.position = position;
-    this.type = type;
-    this.nbtCompound = nbtCompound;
-  }
-
-  @Override
-  public void read() {
-    this.action = Optional.empty();
-    this.type = OptionalInt.empty();
-    this.nbtData = Optional.empty();
-    this.nbtCompound = Optional.empty();
-    if (serverVersion.isNewerThanOrEquals(ServerVersion.V_1_8)) {
-      this.position = new Vector3i(readLong());
-    } else {
-      int x = readInt();
-      int y = readShort();
-      int z = readInt();
-      this.position = new Vector3i(x, y, z);
+    public WrapperPlayServerBlockEntityData(PacketSendEvent event) {
+        super(event);
     }
-    if (serverVersion.isOlderThanOrEquals(ServerVersion.V_1_8_8)) {
-      this.action = Optional.of(Action.VALUES[readUnsignedByte()]);
-      this.nbtData = Optional.of(readByteArray());
-    } else {
-      this.type = OptionalInt.of(readVarInt());
-      this.nbtCompound = Optional.of(readNBT());
+
+    public WrapperPlayServerBlockEntityData(Vector3i position, OptionalInt type, Optional<NBTCompound> nbtCompound) {
+        super(PacketType.Play.Server.BLOCK_ENTITY_DATA);
+        this.position = position;
+        this.type = type;
+        this.nbtCompound = nbtCompound;
     }
-  }
 
-  @Override
-  public void write() {
-    if (serverVersion.isNewerThanOrEquals(ServerVersion.V_1_8)) {
-      long positionVector = this.position.getSerializedPosition();
-      writeLong(positionVector);
-    } else {
-      writeInt(this.position.x);
-      writeShort(this.position.y);
-      writeInt(this.position.z);
+    @Override
+    public void read() {
+        this.action = Optional.empty();
+        this.type = OptionalInt.empty();
+        this.nbtData = Optional.empty();
+        this.nbtCompound = Optional.empty();
+        if (serverVersion.isNewerThanOrEquals(ServerVersion.V_1_8)) {
+            this.position = new Vector3i(readLong());
+        } else {
+            int x = readInt();
+            int y = readShort();
+            int z = readInt();
+            this.position = new Vector3i(x, y, z);
+        }
+        if (serverVersion.isOlderThanOrEquals(ServerVersion.V_1_8_8)) {
+            this.action = Optional.of(Action.VALUES[readUnsignedByte()]);
+            this.nbtData = Optional.of(readByteArray());
+        } else {
+            this.type = OptionalInt.of(readVarInt());
+            this.nbtCompound = Optional.of(readNBT());
+        }
     }
-    if (serverVersion.isOlderThanOrEquals(ServerVersion.V_1_8_8)) {
-      writeByte(this.action.get().ordinal());
-      writeByteArray(this.nbtData.get());
-    } else {
-      writeVarInt(this.type.getAsInt());
-      writeNBT(this.nbtCompound.get());
+
+    @Override
+    public void write() {
+        if (serverVersion.isNewerThanOrEquals(ServerVersion.V_1_8)) {
+            long positionVector = this.position.getSerializedPosition();
+            writeLong(positionVector);
+        } else {
+            writeInt(this.position.x);
+            writeShort(this.position.y);
+            writeInt(this.position.z);
+        }
+        if (serverVersion.isOlderThanOrEquals(ServerVersion.V_1_8_8)) {
+            writeByte(this.action.get().ordinal());
+            writeByteArray(this.nbtData.get());
+        } else {
+            writeVarInt(this.type.getAsInt());
+            writeNBT(this.nbtCompound.get());
+        }
     }
-  }
 
-  @Override
-  public void copy(WrapperPlayServerBlockEntityData wrapper) {
-    this.position = wrapper.position;
-    this.type = wrapper.type;
-    this.nbtCompound = wrapper.nbtCompound;
-  }
+    @Override
+    public void copy(WrapperPlayServerBlockEntityData wrapper) {
+        this.position = wrapper.position;
+        this.type = wrapper.type;
+        this.nbtCompound = wrapper.nbtCompound;
+    }
 
-  @Override
-  public String toString() {
-    return "WrapperPlayServerBlockEntityData{" +
-            "position=" + position +
-            ", action=" + action +
-            ", type=" + type +
-            ", nbtData=" + nbtData +
-            ", nbtCompound=" + nbtCompound +
-            '}';
-  }
+    @Override
+    public String toString() {
+        return "WrapperPlayServerBlockEntityData{" +
+                "position=" + position +
+                ", action=" + action +
+                ", type=" + type +
+                ", nbtData=" + nbtData +
+                ", nbtCompound=" + nbtCompound +
+                '}';
+    }
 
-  public enum Action {
-    MOB_DISPLAYED,
-    COMMAND_BLOCK_TEXT,
-    ROTATION_AND_SKIN_OF_MOB_HEAD,
-    TYPE_OF_FLOWER;
+    public enum Action {
+        MOB_DISPLAYED,
+        COMMAND_BLOCK_TEXT,
+        ROTATION_AND_SKIN_OF_MOB_HEAD,
+        TYPE_OF_FLOWER;
 
-    public static final Action VALUES[] = values();
-  }
+        public static final Action VALUES[] = values();
+    }
 }
