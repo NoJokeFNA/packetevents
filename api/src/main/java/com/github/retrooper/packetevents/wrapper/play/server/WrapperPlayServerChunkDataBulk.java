@@ -158,7 +158,7 @@ public class WrapperPlayServerChunkDataBulk extends PacketWrapper<WrapperPlaySer
 
     private void write_1_8() {
         boolean skylight = false;
-        NetworkChunkData data[] = new NetworkChunkData[this.chunks.length];
+        NetworkChunkData[] data = new NetworkChunkData[this.chunks.length];
         for (int column = 0; column < this.chunks.length; column++) {
             data[column] = ChunkReader_v1_8.chunksToData((Chunk_v1_8[]) this.chunks[column], this.biomeData[column]);
             if (data[column].hasSkyLight()) {
