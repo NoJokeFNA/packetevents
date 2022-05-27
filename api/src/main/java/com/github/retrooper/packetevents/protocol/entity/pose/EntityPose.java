@@ -30,18 +30,20 @@ public enum EntityPose {
     LONG_JUMPING,
     DYING;
 
-   public int getId(ClientVersion version) {
-       if (this == DYING && version.isOlderThan(ClientVersion.V_1_17)) {
-           return 6;
-       }
-       return ordinal();
-   }
+    private static final EntityPose[] VALUES = values();
 
-   public static EntityPose getById(ClientVersion version, int id) {
+    public static EntityPose getById(ClientVersion version, int id) {
        // The LONG_JUMPING pose was added in 1.17, shifting things by 1
        if (id == 6 && version.isOlderThan(ClientVersion.V_1_17)) {
            return DYING;
        }
-       return values()[id];
+       return VALUES[id];
    }
+
+    public int getId(ClientVersion version) {
+        if (this == DYING && version.isOlderThan(ClientVersion.V_1_17)) {
+            return 6;
+        }
+        return ordinal();
+    }
 }

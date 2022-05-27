@@ -59,7 +59,6 @@ public class ColorUtil {
             case "yellow":
                 return prefix + "e";
             case "white":
-                return prefix + "f";
             default:
                 return prefix + "f";
         }
@@ -101,7 +100,6 @@ public class ColorUtil {
             case "yellow":
                 return 14;
             case "white":
-                return 15;
             default:
                 return 15;
         }
@@ -143,7 +141,6 @@ public class ColorUtil {
             case 14:
                 return NamedTextColor.YELLOW;
             case 15:
-                return NamedTextColor.WHITE;
             default:
                 return NamedTextColor.WHITE;
         }

@@ -102,12 +102,14 @@ public class WrapperPlayServerFacePlayer extends PacketWrapper<WrapperPlayServer
     public enum EntitySection {
         EYES, FEET;
 
+        public static final EntitySection[] VALUES = values();
+
         public int getId() {
             return ordinal();
         }
 
         public static EntitySection getById(int id) {
-            return values()[id];
+            return VALUES[id];
         }
     }
 

@@ -96,9 +96,11 @@ public enum ClientVersion {
 
     UNKNOWN(-1, true);
 
+    private static final ClientVersion[] VALUES;
     private static final ClientVersion[] REVERSED_VALUES;
 
     static {
+        VALUES = values();
         REVERSED_VALUES = values();
         int i = 0;
         int j = REVERSED_VALUES.length - 1;
@@ -176,7 +178,7 @@ public enum ClientVersion {
         } else if (protocolVersion > HIGHEST_SUPPORTED_PROTOCOL_VERSION) {
             return HIGHER_THAN_SUPPORTED_VERSIONS;
         } else {
-            for (ClientVersion version : values()) {
+            for (ClientVersion version : VALUES) {
                 if (version.protocolVersion > protocolVersion) {
                     break;
                 } else if (version.protocolVersion == protocolVersion) {
@@ -193,7 +195,7 @@ public enum ClientVersion {
     }
 
     public static ClientVersion getOldest() {
-        return values()[0];
+        return VALUES[0];
     }
 
     @Deprecated
