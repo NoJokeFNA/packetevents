@@ -48,7 +48,7 @@ import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 public class BungeePacketEventsBuilder {
-    private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)" + '\u00A7' + "[0-9A-FK-ORX]");
+    private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)" + '\u00A7' + "[\\dA-FK-ORX]");
     private static PacketEventsAPI<Plugin> INSTANCE;
 
     public static void clearBuildCache() {

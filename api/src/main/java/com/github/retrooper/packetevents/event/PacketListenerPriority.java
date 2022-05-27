@@ -62,8 +62,10 @@ public enum PacketListenerPriority {
      */
     MONITOR;
 
+    private static final PacketListenerPriority[] VALUES = values();
+
     public static PacketListenerPriority getById(byte id) {
-        return values()[id];
+        return VALUES[id];
     }
 
     public byte getId() {

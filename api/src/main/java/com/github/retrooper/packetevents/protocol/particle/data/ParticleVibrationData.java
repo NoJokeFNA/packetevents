@@ -18,7 +18,6 @@
 
 package com.github.retrooper.packetevents.protocol.particle.data;
 
-import com.github.retrooper.packetevents.resources.ResourceLocation;
 import com.github.retrooper.packetevents.util.Vector3i;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 
@@ -28,6 +27,7 @@ public class ParticleVibrationData extends ParticleData {
     public enum PositionType {
         BLOCK("minecraft:block"), ENTITY("minecraft:entity");
 
+        public static final PositionType[] VALUES = values();
         private final String name;
 
         PositionType(String name) {
@@ -39,7 +39,7 @@ public class ParticleVibrationData extends ParticleData {
         }
 
         public static PositionType getByName(String name) {
-            for(PositionType type : values()) {
+            for (PositionType type : VALUES) {
                 if(type.getName().equals(name)) {
                     return type;
                 }

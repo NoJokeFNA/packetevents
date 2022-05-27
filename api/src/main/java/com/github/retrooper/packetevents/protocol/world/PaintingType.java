@@ -50,22 +50,23 @@ public enum PaintingType {
     SKELETON("Skeleton"),
     DONKEY_KONG("DonkeyKong");
 
-    private final String title;
+    private static final PaintingType[] VALUES = values();
     private static final Map<String, PaintingType> TITLE_TO_NAME_MAP = new HashMap<>();
+    private final String title;
 
     PaintingType(String title) {
         this.title = title;
     }
 
     public static PaintingType getById(int id) {
-        return values()[id];
+        return VALUES[id];
     }
 
     @Deprecated
     public static PaintingType getByTitle(String title) {
         PaintingType type = TITLE_TO_NAME_MAP.get(title);
         if (type == null) {
-            for (PaintingType t : values()) {
+            for (PaintingType t : VALUES) {
                 if (t.title.equals(title)) {
                     TITLE_TO_NAME_MAP.put(title, t);
                     return t;
