@@ -132,7 +132,7 @@ public class WrapperPlayServerWorldBorder extends PacketWrapper<WrapperPlayServe
 
     @Override
     public void read() {
-        this.action = WorldBorderAction.values()[this.readVarInt()];
+        this.action = WorldBorderAction.VALUES[this.readVarInt()];
         if (this.action == WorldBorderAction.SET_SIZE) {
             this.radius = readDouble();
         } else if (this.action == WorldBorderAction.LERP_SIZE) {
@@ -207,5 +207,7 @@ public class WrapperPlayServerWorldBorder extends PacketWrapper<WrapperPlayServe
         INITIALIZE,
         SET_WARNING_TIME,
         SET_WARNING_BLOCKS;
+
+        public static final WorldBorderAction[] VALUES = values();
     }
 }

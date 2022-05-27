@@ -37,16 +37,13 @@ import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
-import io.github.retrooper.packetevents.PacketEventsPlugin;
 import io.github.retrooper.packetevents.impl.netty.NettyManagerImpl;
 import io.github.retrooper.packetevents.impl.netty.manager.player.PlayerManagerAbstract;
 import io.github.retrooper.packetevents.impl.netty.manager.protocol.ProtocolManagerAbstract;
 import io.github.retrooper.packetevents.impl.netty.manager.server.ServerManagerAbstract;
 import io.github.retrooper.packetevents.injector.VelocityPipelineInjector;
 import io.github.retrooper.packetevents.manager.PlayerManagerImpl;
-import io.netty.channel.Channel;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.logging.Level;
@@ -97,7 +94,7 @@ public class VelocityPacketEventsBuilder {
                     if (version == null) {
                         String velocityVersion = com.velocitypowered.api.network.ProtocolVersion
                                 .MAXIMUM_VERSION.getName();
-                        for (final ServerVersion val : ServerVersion.values()) {
+                        for (final ServerVersion val : ServerVersion.VALUES) {
                             if (velocityVersion.contains(val.getReleaseName())) {
                                 return version = val;
                             }

@@ -111,14 +111,14 @@ public class WrapperPlayServerPlayerInfo extends PacketWrapper<WrapperPlayServer
                             TextureProperty textureProperty = new TextureProperty(propertyName, propertyValue, propertySignature);
                             userProfile.getTextureProperties().add(textureProperty);
                         }
-                        GameMode gameMode = GameMode.values()[readVarInt()];
+                        GameMode gameMode = GameMode.VALUES[readVarInt()];
                         int ping = readVarInt();
                         Component displayName = readBoolean() ? readComponent() : null;
                         data = new PlayerData(displayName, userProfile, gameMode, ping);
                         break;
                     }
                     case UPDATE_GAME_MODE: {
-                        GameMode gameMode = GameMode.values()[readVarInt()];
+                        GameMode gameMode = GameMode.VALUES[readVarInt()];
                         data = new PlayerData((Component) null, new UserProfile(uuid, null), gameMode, -1);
                         break;
                     }
