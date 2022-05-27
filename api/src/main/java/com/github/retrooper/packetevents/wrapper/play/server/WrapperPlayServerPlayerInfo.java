@@ -22,8 +22,8 @@ import com.github.retrooper.packetevents.event.PacketSendEvent;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.protocol.player.GameMode;
-import com.github.retrooper.packetevents.protocol.player.TextureProperty;
 import com.github.retrooper.packetevents.protocol.player.UserProfile;
+import com.github.retrooper.packetevents.protocol.player.TextureProperty;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -111,20 +111,20 @@ public class WrapperPlayServerPlayerInfo extends PacketWrapper<WrapperPlayServer
                             TextureProperty textureProperty = new TextureProperty(propertyName, propertyValue, propertySignature);
                             userProfile.getTextureProperties().add(textureProperty);
                         }
-                        GameMode gameMode = GameMode.VALUES[readVarInt()];
+                        GameMode gameMode = GameMode.values()[readVarInt()];
                         int ping = readVarInt();
                         Component displayName = readBoolean() ? readComponent() : null;
                         data = new PlayerData(displayName, userProfile, gameMode, ping);
                         break;
                     }
                     case UPDATE_GAME_MODE: {
-                        GameMode gameMode = GameMode.VALUES[readVarInt()];
-                        data = new PlayerData(null, new UserProfile(uuid, null), gameMode, -1);
+                        GameMode gameMode = GameMode.values()[readVarInt()];
+                        data = new PlayerData((Component) null, new UserProfile(uuid, null), gameMode, -1);
                         break;
                     }
                     case UPDATE_LATENCY: {
                         int ping = readVarInt();
-                        data = new PlayerData(null, new UserProfile(uuid, null), null, ping);
+                        data = new PlayerData((Component) null, new UserProfile(uuid, null), null, ping);
                         break;
                     }
                     case UPDATE_DISPLAY_NAME:
@@ -133,7 +133,7 @@ public class WrapperPlayServerPlayerInfo extends PacketWrapper<WrapperPlayServer
                         break;
 
                     case REMOVE_PLAYER:
-                        data = new PlayerData(null, new UserProfile(uuid, null), null, -1);
+                        data = new PlayerData((Component) null, new UserProfile(uuid, null), null, -1);
                         break;
                 }
                 if (data != null) {
