@@ -26,7 +26,6 @@ import com.github.retrooper.packetevents.protocol.world.PaintingType;
 import com.github.retrooper.packetevents.util.Vector3i;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 
-import java.util.Optional;
 import java.util.UUID;
 
 // Mostly from MCProtocolLib

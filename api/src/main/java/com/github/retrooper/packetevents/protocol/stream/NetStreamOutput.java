@@ -52,13 +52,13 @@ public class NetStreamOutput extends FilterOutputStream {
 
     public void writeShort(int s) {
         this.writeByte((byte) ((s >>> 8) & 0xFF));
-        this.writeByte((byte) ((s >>> 0) & 0xFF));
+        this.writeByte((byte) ((s) & 0xFF));
     }
 
 
     public void writeChar(int c) {
         this.writeByte((byte) ((c >>> 8) & 0xFF));
-        this.writeByte((byte) ((c >>> 0) & 0xFF));
+        this.writeByte((byte) ((c) & 0xFF));
     }
 
 
@@ -66,7 +66,7 @@ public class NetStreamOutput extends FilterOutputStream {
         this.writeByte((byte) ((i >>> 24) & 0xFF));
         this.writeByte((byte) ((i >>> 16) & 0xFF));
         this.writeByte((byte) ((i >>> 8) & 0xFF));
-        this.writeByte((byte) ((i >>> 0) & 0xFF));
+        this.writeByte((byte) ((i) & 0xFF));
     }
 
 
@@ -88,7 +88,7 @@ public class NetStreamOutput extends FilterOutputStream {
         this.writeByte((byte) (l >>> 24));
         this.writeByte((byte) (l >>> 16));
         this.writeByte((byte) (l >>> 8));
-        this.writeByte((byte) (l >>> 0));
+        this.writeByte((byte) (l));
     }
 
 

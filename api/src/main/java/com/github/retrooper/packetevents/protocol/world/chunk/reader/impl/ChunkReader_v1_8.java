@@ -112,20 +112,20 @@ public class ChunkReader_v1_8 implements ChunkReader {
                     }
 
                     if (pass == 1) {
-                        short blocks[] = chunk.getBlocks().getData();
+                        short[] blocks = chunk.getBlocks().getData();
                         buf.position(pos / 2);
                         buf.put(blocks, 0, blocks.length);
                         pos += blocks.length * 2;
                     }
 
                     if (pass == 2) {
-                        byte blocklight[] = chunk.getBlockLight().getData();
+                        byte[] blocklight = chunk.getBlockLight().getData();
                         System.arraycopy(blocklight, 0, data, pos, blocklight.length);
                         pos += blocklight.length;
                     }
 
                     if (pass == 3 && chunk.getSkyLight() != null) {
-                        byte skylight[] = chunk.getSkyLight().getData();
+                        byte[] skylight = chunk.getSkyLight().getData();
                         System.arraycopy(skylight, 0, data, pos, skylight.length);
                         pos += skylight.length;
                         sky = true;

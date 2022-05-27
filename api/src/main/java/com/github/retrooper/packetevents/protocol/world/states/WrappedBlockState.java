@@ -7,8 +7,6 @@ import com.github.retrooper.packetevents.protocol.world.states.enums.*;
 import com.github.retrooper.packetevents.protocol.world.states.type.StateType;
 import com.github.retrooper.packetevents.protocol.world.states.type.StateTypes;
 import com.github.retrooper.packetevents.protocol.world.states.type.StateValue;
-import com.github.retrooper.packetevents.util.MappingHelper;
-import com.google.gson.JsonObject;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
@@ -1068,7 +1066,7 @@ public class WrappedBlockState {
      * For pre-1.13: 4 bits of block data, 4 bits empty, 8 bits block type
      * For post-1.13: Global ID
      *
-     * @return
+     * @return The global ID of this block
      */
     public int getGlobalId() {
         return globalID;

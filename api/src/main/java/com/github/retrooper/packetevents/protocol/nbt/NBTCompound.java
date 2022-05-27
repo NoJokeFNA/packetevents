@@ -78,18 +78,18 @@ public class NBTCompound extends NBT {
 
     @SuppressWarnings("unchecked")
     public <T extends NBT> NBTList<T> getTagListOfTypeOrThrow(String key, Class<T> type) {
-        NBTList<? extends NBT> list = getTagOfTypeOrThrow(key, NBTList.class);
+        NBTList<T> list = getTagOfTypeOrThrow(key, NBTList.class);
         if (!type.isAssignableFrom(list.getTagsType().getNBTClass())) {
             throw new IllegalStateException(MessageFormat.format("NBTList {0} tags type has unexpected type, expected {1}, but got {2}", key, type, list.getTagsType().getNBTClass()));
         }
-        return (NBTList<T>) list;
+        return list;
     }
 
     @SuppressWarnings("unchecked")
     public <T extends NBT> NBTList<T> getTagListOfTypeOrNull(String key, Class<T> type) {
-        NBTList<? extends NBT> list = getTagOfTypeOrNull(key, NBTList.class);
+        NBTList<T> list = getTagOfTypeOrNull(key, NBTList.class);
         if ((list != null) && type.isAssignableFrom(list.getTagsType().getNBTClass())) {
-            return (NBTList<T>) list;
+            return list;
         }
         return null;
     }
@@ -177,9 +177,9 @@ public class NBTCompound extends NBT {
 
     @SuppressWarnings("unchecked")
     public <T extends NBT> NBTList<T> removeTagAndReturnIfListType(String key, Class<T> type) {
-        NBTList<?> list = removeTagAndReturnIfType(key, NBTList.class);
+        NBTList<T> list = removeTagAndReturnIfType(key, NBTList.class);
         if ((list != null) && type.isAssignableFrom(list.getTagsType().getNBTClass())) {
-            return (NBTList<T>) list;
+            return list;
         }
         return null;
     }

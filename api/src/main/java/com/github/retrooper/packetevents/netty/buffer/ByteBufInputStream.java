@@ -18,7 +18,10 @@
 
 package com.github.retrooper.packetevents.netty.buffer;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.*;
+
 //TODO give netty credit
 public class ByteBufInputStream extends InputStream implements DataInput {
     private final Object buffer;
@@ -99,7 +102,7 @@ public class ByteBufInputStream extends InputStream implements DataInput {
     }
 
 
-    public int read(byte[] b, int off, int len) throws IOException {
+    public int read(byte @NotNull [] b, int off, int len) throws IOException {
         int available = this.available();
         if (available == 0) {
             return -1;
@@ -149,11 +152,11 @@ public class ByteBufInputStream extends InputStream implements DataInput {
         return Float.intBitsToFloat(this.readInt());
     }
 
-    public void readFully(byte[] b) throws IOException {
+    public void readFully(byte @NotNull [] b) throws IOException {
         this.readFully(b, 0, b.length);
     }
 
-    public void readFully(byte[] b, int off, int len) throws IOException {
+    public void readFully(byte @NotNull [] b, int off, int len) throws IOException {
         this.checkAvailable(len);
         ByteBufHelper.readBytes(buffer, b, off, len);
     }

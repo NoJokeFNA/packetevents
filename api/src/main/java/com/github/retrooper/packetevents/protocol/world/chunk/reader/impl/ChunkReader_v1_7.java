@@ -136,26 +136,26 @@ public class ChunkReader_v1_7 implements ChunkReader {
                     }
 
                     if(pass == 2) {
-                        byte meta[] = chunk.getMetadata().getData();
+                        byte[] meta = chunk.getMetadata().getData();
                         System.arraycopy(meta, 0, data, pos, meta.length);
                         pos += meta.length;
                     }
 
                     if(pass == 3) {
-                        byte blocklight[] = chunk.getBlockLight().getData();
+                        byte[] blocklight = chunk.getBlockLight().getData();
                         System.arraycopy(blocklight, 0, data, pos, blocklight.length);
                         pos += blocklight.length;
                     }
 
                     if(pass == 4 && chunk.getSkyLight() != null) {
-                        byte skylight[] = chunk.getSkyLight().getData();
+                        byte[] skylight = chunk.getSkyLight().getData();
                         System.arraycopy(skylight, 0, data, pos, skylight.length);
                         pos += skylight.length;
                         sky = true;
                     }
 
                     if(pass == 5 && chunk.getExtendedBlocks() != null) {
-                        byte extended[] = chunk.getExtendedBlocks().getData();
+                        byte[] extended = chunk.getExtendedBlocks().getData();
                         System.arraycopy(extended, 0, data, pos, extended.length);
                         pos += extended.length;
                     }
