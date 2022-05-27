@@ -78,9 +78,9 @@ public class WrapperPlayServerRespawn extends PacketWrapper<WrapperPlayServerRes
             dimension = new Dimension(dimensionType, dimensionAttributes);
             worldName = Optional.of(readString());
             hashedSeed = readLong();
-            gameMode = GameMode.values()[readByte()];
+            gameMode = GameMode.VALUES[readByte()];
             int previousMode = readByte();
-            previousGameMode = previousMode == -1 ? null : GameMode.values()[previousMode];
+            previousGameMode = previousMode == -1 ? null : GameMode.VALUES[previousMode];
             worldDebug = readBoolean();
             worldFlat = readBoolean();
             keepingAllPlayerData = readBoolean();
@@ -90,9 +90,9 @@ public class WrapperPlayServerRespawn extends PacketWrapper<WrapperPlayServerRes
             dimension = new Dimension(dimensionType);
             worldName = Optional.of(readString());
             hashedSeed = readLong();
-            gameMode = GameMode.values()[readByte()];
+            gameMode = GameMode.VALUES[readByte()];
             int previousMode = readByte();
-            previousGameMode = previousMode == -1 ? null : GameMode.values()[previousMode];
+            previousGameMode = previousMode == -1 ? null : GameMode.VALUES[previousMode];
             worldDebug = readBoolean();
             worldFlat = readBoolean();
             keepingAllPlayerData = readBoolean();
@@ -102,7 +102,7 @@ public class WrapperPlayServerRespawn extends PacketWrapper<WrapperPlayServerRes
             dimension = new Dimension(dimensionType);
             worldName = Optional.empty();
             hashedSeed = readLong();
-            gameMode = GameMode.values()[readByte()];
+            gameMode = GameMode.VALUES[readByte()];
             levelType = readString(16);
             if (WorldType.FLAT.getName().equals(levelType)) {
                 worldFlat = true;
@@ -130,7 +130,7 @@ public class WrapperPlayServerRespawn extends PacketWrapper<WrapperPlayServerRes
             worldName = Optional.empty();
             hashedSeed = 0L;
             //Note: SPECTATOR will not be expected from a 1.7 client.
-            gameMode = GameMode.values()[readByte()];
+            gameMode = GameMode.VALUES[readByte()];
             levelType = readString(16);
             if (WorldType.FLAT.getName().equals(levelType)) {
                 worldFlat = true;

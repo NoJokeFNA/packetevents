@@ -37,7 +37,7 @@ public class WrapperPlayServerOpenBook extends PacketWrapper<WrapperPlayServerOp
 
     @Override
     public void read() {
-        hand = InteractionHand.values()[readVarInt()];
+        hand = InteractionHand.VALUES[readVarInt()];
     }
 
     @Override

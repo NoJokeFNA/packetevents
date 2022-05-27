@@ -18,7 +18,6 @@
 
 package com.github.retrooper.packetevents.wrapper.play.server;
 
-import com.github.retrooper.packetevents.event.PacketReceiveEvent;
 import com.github.retrooper.packetevents.event.PacketSendEvent;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
@@ -38,9 +37,11 @@ public class WrapperPlayServerScoreboardObjective extends PacketWrapper<WrapperP
         INTEGER,
         HEARTS;
 
+        public static final HealthDisplay[] VALUES = values();
+
         @Nullable
         public static HealthDisplay getByName(String name) {
-            for (HealthDisplay display : values()) {
+            for (HealthDisplay display : VALUES) {
                 if (display.name().equalsIgnoreCase(name)) {
                     return display;
                 }
@@ -54,6 +55,8 @@ public class WrapperPlayServerScoreboardObjective extends PacketWrapper<WrapperP
         CREATE,
         REMOVE,
         UPDATE;
+
+        public static final ObjectiveMode[] VALUES = values();
     }
 
     public WrapperPlayServerScoreboardObjective(PacketSendEvent event) {
@@ -71,13 +74,13 @@ public class WrapperPlayServerScoreboardObjective extends PacketWrapper<WrapperP
     @Override
     public void read() {
         name = readString();
-        mode = ObjectiveMode.values()[readByte()];
+        mode = ObjectiveMode.VALUES[readByte()];
         if (mode == ObjectiveMode.CREATE || mode == ObjectiveMode.UPDATE) {
             displayName = Optional.ofNullable(readString());
             if (serverVersion.isOlderThan(ServerVersion.V_1_13)) {
                 display = Optional.ofNullable(HealthDisplay.getByName(readString()));
             } else {
-                display = Optional.of(HealthDisplay.values()[readVarInt()]);
+                display = Optional.of(HealthDisplay.VALUES[readVarInt()]);
             }
         } else {
             displayName = Optional.empty();

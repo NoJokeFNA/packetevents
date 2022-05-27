@@ -47,7 +47,7 @@ public enum ServerVersion {
     //TODO UPDATE Add server version constant
     ERROR(-1, true);
 
-    private static final ServerVersion[] VALUES = values();
+    public static final ServerVersion[] VALUES = values();
     private static final ServerVersion[] REVERSED_VALUES;
 
     static {
@@ -89,13 +89,13 @@ public enum ServerVersion {
     }
 
     public static ServerVersion getOldest() {
-        return values()[0];
+        return VALUES[0];
     }
 
     //TODO Optimize
     @Deprecated
     public static ServerVersion getById(int protocolVersion) {
-        for (ServerVersion version : values()) {
+        for (ServerVersion version : VALUES) {
             if (version.protocolVersion == protocolVersion) {
                 return version;
             }
