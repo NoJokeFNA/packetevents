@@ -20,12 +20,15 @@ package com.github.retrooper.packetevents.wrapper.play.server;
 
 import com.github.retrooper.packetevents.event.PacketSendEvent;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
+import com.github.retrooper.packetevents.protocol.effect.type.EffectType;
+import com.github.retrooper.packetevents.protocol.effect.type.EffectTypes;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.util.Vector3i;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 
 public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffect> {
     private int effectId;
+    private EffectType effectType;
     private Vector3i position;
     private int data;
     private boolean disableRelativeVolume;
@@ -34,9 +37,10 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
         super(event);
     }
 
-    public WrapperPlayServerEffect(int effectId, Vector3i position, int data, boolean disableRelativeVolume) {
+    public WrapperPlayServerEffect(int effectId, EffectType effectType, Vector3i position, int data, boolean disableRelativeVolume) {
         super(PacketType.Play.Server.EFFECT);
         this.effectId = effectId;
+        this.effectType = effectType;
         this.position = position;
         this.data = data;
         this.disableRelativeVolume = disableRelativeVolume;
@@ -45,6 +49,7 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
     @Override
     public void read() {
         this.effectId = readInt();
+        this.effectType = EffectTypes.getById(serverVersion.toClientVersion(), this.effectId);
         if (serverVersion.isNewerThanOrEquals(ServerVersion.V_1_8)) {
             this.position = new Vector3i(readLong());
         } else {
@@ -74,18 +79,18 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
 
     @Override
     public void copy(WrapperPlayServerEffect wrapper) {
-        this.effectId = wrapper.effectId;
+        this.effectType = wrapper.effectType;
         this.position = wrapper.position;
         this.data = wrapper.data;
         this.disableRelativeVolume = wrapper.disableRelativeVolume;
     }
 
-    public int getEffectId() {
-        return effectId;
+    public EffectType getEffectType() {
+        return effectType;
     }
 
-    public void setEffectId(int effectId) {
-        this.effectId = effectId;
+    public void setEffectType(EffectType effectType) {
+        this.effectType = effectType;
     }
 
     public Vector3i getPosition() {
@@ -110,5 +115,16 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
 
     public void setDisableRelativeVolume(boolean disableRelativeVolume) {
         this.disableRelativeVolume = disableRelativeVolume;
+    }
+
+    @Override
+    public String toString() {
+        return "WrapperPlayServerEffect{" +
+                "effectId=" + effectId +
+                ", effectType=" + effectType.getName() +
+                ", position=" + position.getSerializedPosition() +
+                ", data=" + data +
+                ", disableRelativeVolume=" + disableRelativeVolume +
+                '}';
     }
 }
