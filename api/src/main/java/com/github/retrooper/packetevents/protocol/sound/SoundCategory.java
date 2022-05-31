@@ -30,5 +30,5 @@ public enum SoundCategory {
     AMBIENT,
     VOICE;
 
-    public static final SoundCategory[] VALUES = values();
+    public static SoundCategory[] VALUES = values();
 }
