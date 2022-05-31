@@ -247,6 +247,7 @@ public class WrapperPlayServerTitle extends PacketWrapper<WrapperPlayServerTitle
         SET_TIMES_AND_DISPLAY(2),
         HIDE(3),
         RESET(4);
+        public static final TitleAction[] VALUES = values();
         private final int legacyId;
 
         TitleAction() {
@@ -258,11 +259,11 @@ public class WrapperPlayServerTitle extends PacketWrapper<WrapperPlayServerTitle
         }
 
         public static TitleAction fromId(int id) {
-            return values()[id];
+            return VALUES[id];
         }
 
         public static TitleAction fromLegacyId(int legacyId) {
-            for (TitleAction action : values()) {
+            for (TitleAction action : VALUES) {
                 if (action.legacyId == legacyId) {
                     return action;
                 }

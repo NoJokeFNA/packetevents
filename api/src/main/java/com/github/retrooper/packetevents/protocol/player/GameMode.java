@@ -32,15 +32,17 @@ public enum GameMode {
     ADVENTURE,
     SPECTATOR;
 
-    public int getId() {
-        return ordinal();
-    }
+    public static final GameMode[] VALUES = values();
 
     @Nullable
     public static GameMode getById(int id) {
         if (id == -1) {
             return null;
         }
-        return values()[id];
+        return VALUES[id];
+    }
+
+    public int getId() {
+        return ordinal();
     }
 }

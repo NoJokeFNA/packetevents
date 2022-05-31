@@ -32,13 +32,15 @@ public enum DimensionType {
         this.name = name;
     }
 
+    private static final DimensionType[] VALUES = values();
+
     public static DimensionType getById(int id) {
-        return values()[id + 1];
+        return VALUES[id + 1];
     }
 
     @Nullable
     public static DimensionType getByName(String name) {
-        for (DimensionType type : values()) {
+        for (DimensionType type : VALUES) {
             if (type.name.equals(name)) {
                 return type;
             }

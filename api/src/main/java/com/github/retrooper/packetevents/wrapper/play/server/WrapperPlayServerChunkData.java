@@ -357,7 +357,7 @@ public class WrapperPlayServerChunkData extends PacketWrapper<WrapperPlayServerC
             NetworkChunkData data = ChunkReader_v1_7.chunksToData((Chunk_v1_7[]) chunks, column.getBiomeDataBytes());
             Deflater deflater = new Deflater(-1);
 
-            byte deflated[] = new byte[data.getData().length];
+            byte[] deflated = new byte[data.getData().length];
             int len = deflated.length;
             try {
                 deflater.setInput(data.getData(), 0, data.getData().length);

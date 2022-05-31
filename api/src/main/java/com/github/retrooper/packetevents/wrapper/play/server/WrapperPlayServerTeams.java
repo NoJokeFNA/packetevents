@@ -28,8 +28,8 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -52,18 +52,20 @@ public class WrapperPlayServerTeams extends PacketWrapper<WrapperPlayServerTeams
             byteValue = value;
         }
 
-        public byte getByteValue() {
-            return byteValue;
-        }
+        public static final OptionData[] VALUES = values();
 
         @Nullable
         public static OptionData fromValue(byte value) {
-            for(OptionData data : values()) {
+            for(OptionData data : VALUES) {
                 if(data.getByteValue() == value) {
                     return data;
                 }
             }
             return null;
+        }
+
+        public byte getByteValue() {
+            return byteValue;
         }
     }
 
@@ -79,9 +81,11 @@ public class WrapperPlayServerTeams extends PacketWrapper<WrapperPlayServerTeams
             this.id = id;
         }
 
+        public static final NameTagVisibility[] VALUES = values();
+
         @Nullable
         public static NameTagVisibility fromID(String id) {
-            for (NameTagVisibility value : NameTagVisibility.values()) {
+            for (NameTagVisibility value : VALUES) {
                 if (value.id.equalsIgnoreCase(id)) {
                     return value;
                 }
@@ -106,9 +110,11 @@ public class WrapperPlayServerTeams extends PacketWrapper<WrapperPlayServerTeams
             this.id = id;
         }
 
+        public static final CollisionRule[] VALUES = values();
+
         @Nullable
         public static CollisionRule fromID(String id) {
-            for (CollisionRule value : CollisionRule.values()) {
+            for (CollisionRule value : VALUES) {
                 if (value.id.equalsIgnoreCase(id)) {
                     return value;
                 }
@@ -128,6 +134,8 @@ public class WrapperPlayServerTeams extends PacketWrapper<WrapperPlayServerTeams
         UPDATE,
         ADD_ENTITIES,
         REMOVE_ENTITIES;
+
+        public static final TeamMode[] VALUES = values();
     }
 
     public WrapperPlayServerTeams(String teamName, TeamMode teamMode, Optional<ScoreBoardTeamInfo> teamInfo, Collection<String> entities) {
@@ -149,7 +157,7 @@ public class WrapperPlayServerTeams extends PacketWrapper<WrapperPlayServerTeams
     @Override
     public void read() {
         teamName = readString(16);
-        teamMode = TeamMode.values()[readByte()];
+        teamMode = TeamMode.VALUES[readByte()];
         ScoreBoardTeamInfo info = null;
         if (teamMode == TeamMode.CREATE || teamMode == TeamMode.UPDATE) {
             Component displayName, prefix, suffix;
@@ -161,7 +169,7 @@ public class WrapperPlayServerTeams extends PacketWrapper<WrapperPlayServerTeams
                 displayName = AdventureSerializer.fromLegacyFormat(readString());
                 prefix = AdventureSerializer.fromLegacyFormat(readString());
                 suffix = AdventureSerializer.fromLegacyFormat(readString());
-                optionData = OptionData.values()[readByte()];
+                optionData = OptionData.VALUES[readByte()];
                 if (serverVersion == ServerVersion.V_1_7_10) {
                     nameTagVisibility = NameTagVisibility.ALWAYS;
                     color = NamedTextColor.WHITE;

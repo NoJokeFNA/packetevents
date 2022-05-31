@@ -22,12 +22,14 @@ public enum ChatPosition {
     CHAT,
     SYSTEM,
     GAME_INFO;
-    
-    public int getId() {
-        return ordinal();
-    }
+
+    private static final ChatPosition[] VALUES = values();
 
     public static ChatPosition getById(int id) {
-        return values()[id];
+        return VALUES[id];
+    }
+
+    public int getId() {
+        return ordinal();
     }
 }

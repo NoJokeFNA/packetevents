@@ -20,10 +20,7 @@ package io.github.retrooper.packetevents.util;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class InjectedList<E> implements List<E> {
@@ -97,13 +94,13 @@ public class InjectedList<E> implements List<E> {
 
     @NotNull
     @Override
-    public synchronized Object[] toArray() {
+    public synchronized Object @NotNull [] toArray() {
         return originalList.toArray();
     }
 
     @NotNull
     @Override
-    public synchronized <T> T[] toArray(@NotNull T[] a) {
+    public synchronized <T> T @NotNull [] toArray(@NotNull T @NotNull [] a) {
         return originalList.toArray(a);
     }
 
@@ -114,7 +111,7 @@ public class InjectedList<E> implements List<E> {
 
     @Override
     public synchronized boolean containsAll(@NotNull Collection<?> c) {
-        return originalList.containsAll(c);
+        return new HashSet<>(originalList).containsAll(c);
     }
 
     @Override

@@ -87,7 +87,7 @@ public class WrapperPlayServerTabComplete extends PacketWrapper<WrapperPlayServe
             commandMatches = new ArrayList<>(matchLength);
             for (int i = 0; i < matchLength; i++) {
                 String text = readString();
-                CommandMatch commandMatch = new CommandMatch(text, (Component) null);
+                CommandMatch commandMatch = new CommandMatch(text, null);
                 commandMatches.add(commandMatch);
             }
         }

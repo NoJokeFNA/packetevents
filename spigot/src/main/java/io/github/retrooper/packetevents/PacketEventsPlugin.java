@@ -55,6 +55,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 public class PacketEventsPlugin extends JavaPlugin {
+
+    private static final org.bukkit.entity.EntityType[] VALUES = org.bukkit.entity.EntityType.values();
+
     @Override
     public void onLoad() {
         PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
@@ -132,14 +135,14 @@ public class PacketEventsPlugin extends JavaPlugin {
                             user.sendMessage("Back to Bukkit itemstack type: " + backToBukkitStack.getType().name() + ", type: " + backToBukkitStack.getClass().getSimpleName());
 
                         } else if (chatMessage.getMessage().equalsIgnoreCase("test0")) {
-                            for (org.bukkit.entity.EntityType type : org.bukkit.entity.EntityType.values()) {
+                            for (org.bukkit.entity.EntityType type : VALUES) {
                                 EntityType entityType = SpigotDataHelper.fromBukkitEntityType(type);
                                 if (entityType != null) {
                                     System.out.println("EntityType: " + entityType.getName() + ", Bukkit type: " + type.getName());
                                 }
                             }
                         } else if (chatMessage.getMessage().equalsIgnoreCase("test1")) {
-                            for (org.bukkit.entity.EntityType type : org.bukkit.entity.EntityType.values()) {
+                            for (org.bukkit.entity.EntityType type : VALUES) {
                                 if (type.getTypeId() != -1) {
                                     EntityType entityType = SpigotDataHelper.fromBukkitEntityType(type);
                                     if (entityType == null) {

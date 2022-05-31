@@ -74,10 +74,7 @@ public class ShortArray3d {
         if(o == null || getClass() != o.getClass()) return false;
 
         ShortArray3d that = (ShortArray3d) o;
-
-        if(!Arrays.equals(data, that.data)) return false;
-
-        return true;
+        return Arrays.equals(data, that.data);
     }
 
     @Override
