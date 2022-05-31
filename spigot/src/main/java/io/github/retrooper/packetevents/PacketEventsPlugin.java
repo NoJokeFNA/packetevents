@@ -45,7 +45,6 @@ import io.github.retrooper.packetevents.util.SpigotDataHelper;
 import io.github.retrooper.packetevents.util.SpigotReflectionUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -233,9 +232,12 @@ public class PacketEventsPlugin extends JavaPlugin {
                     System.out.println("Spawning a new entity of type: " + spawnEntity.getEntityType());
                 } else if (event.getPacketType() == PacketType.Play.Server.BLOCK_CHANGE) {
                     WrapperPlayServerBlockChange change = new WrapperPlayServerBlockChange(event);
-                    Bukkit.broadcastMessage(change.getBlockState().toString());
+                    //Bukkit.broadcastMessage(change.getBlockState().toString());
                 } else if (event.getPacketType() == PacketType.Play.Server.CHUNK_DATA) {
                     WrapperPlayServerChunkData data = new WrapperPlayServerChunkData(event);
+                } else if (event.getPacketType() == PacketType.Play.Server.EFFECT) {
+                    WrapperPlayServerEffect wrapper = new WrapperPlayServerEffect(event);
+                    System.out.println(wrapper.toString());
                 }
             }
 

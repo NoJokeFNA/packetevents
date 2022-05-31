@@ -121,7 +121,6 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
     public String toString() {
         return "WrapperPlayServerEffect{" +
                 "effectId=" + effectId +
-                ", effectType=" + effectType.getName() +
                 ", position=" + position.getSerializedPosition() +
                 ", data=" + data +
                 ", disableRelativeVolume=" + disableRelativeVolume +
