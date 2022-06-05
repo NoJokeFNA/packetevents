@@ -46,6 +46,7 @@ import io.github.retrooper.packetevents.util.SpigotReflectionUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.material.MaterialData;
@@ -66,6 +67,13 @@ public class PacketEventsPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        for (Effect value : Effect.values()) {
+            final Effect.Type type = value.getType();
+            if (type == Effect.Type.SOUND || type == Effect.Type.VISUAL) {
+                PacketEvents.getAPI().getLogger().info(value.name() + " -> " + value.getId() + " -> " + type);
+            }
+        }
+
         //Register your listeners
         PacketEvents.getAPI().getSettings().debug(false).bStats(true)
                 .checkForUpdates(true).timeStampMode(TimeStampMode.MILLIS).readOnlyListeners(false);

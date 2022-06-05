@@ -7,5 +7,45 @@
   },
   "V_1_16": {
     "ambient_basalt_deltas_additions": 2
+  },
+  "V_1_15": {
+    "ambient_basalt_deltas_additions": 1
+  },
+  "V_1_14": {
+    "ambient_basalt_deltas_additions": 1
+  },
+  "V_1_13": {
+    "ambient_basalt_deltas_additions": 1
+  },
+  "V_1_12": {
+    "ambient_basalt_deltas_additions": 1
+  },
+  "V_1_11": {
+    "ambient_basalt_deltas_additions": 1
+  },
+  "V_1_10": {
+    "ambient_basalt_deltas_additions": 1
+  },
+  "V_1_9": {
+    "ambient_basalt_deltas_additions": 1
+  },
+  "V_1_8": {
+    "click2": "1000:sound",
+    "click1": "1001:sound",
+    "bow_fire": "1002:sound",
+    "door_toggle": "1003:sound",
+    "extinguish": "1004:sound",
+    "record_play": "1005:sound",
+    "ghast_shriek": "1007:sound",
+    "ghast_shoot": "1008:sound",
+    "blaze_shoot": "1009:sound",
+    "zombie_chew_wooden_door": "1010:sound",
+    "zombie_chew_iron_door": "1011:sound",
+    "zombie_destroy_door": "1012:sound",
+    "smoke": "2000:visual",
+    "step_sound": "2001:sound",
+    "potion_break": "2002:visual",
+    "ender_signal": "2003:visual",
+    "mobspawner_flames": "2004:visual"
   }
 }

@@ -23,11 +23,14 @@ import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.protocol.effect.type.EffectType;
 import com.github.retrooper.packetevents.protocol.effect.type.EffectTypes;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
+import com.github.retrooper.packetevents.protocol.world.Direction;
 import com.github.retrooper.packetevents.util.Vector3i;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
+import org.jetbrains.annotations.Nullable;
 
 public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffect> {
     private int effectId;
+    private @Nullable Direction direction;
     private EffectType effectType;
     private Vector3i position;
     private int data;
@@ -37,9 +40,10 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
         super(event);
     }
 
-    public WrapperPlayServerEffect(int effectId, EffectType effectType, Vector3i position, int data, boolean disableRelativeVolume) {
+    public WrapperPlayServerEffect(int effectId, EffectType effectType, @Nullable Direction direction, Vector3i position, int data, boolean disableRelativeVolume) {
         super(PacketType.Play.Server.EFFECT);
         this.effectId = effectId;
+        this.direction = direction;
         this.effectType = effectType;
         this.position = position;
         this.data = data;
@@ -49,6 +53,12 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
     @Override
     public void read() {
         this.effectId = readInt();
+        if (this.effectId == 2000) {
+            System.out.println("HI!");
+            this.direction = Direction.getByHorizontalIndex(readUnsignedByte());
+            System.out.println(" -> " + direction.name() + " -> " + direction.getHorizontalIndex());
+        }
+
         this.effectType = EffectTypes.getById(serverVersion.toClientVersion(), this.effectId);
         if (serverVersion.isNewerThanOrEquals(ServerVersion.V_1_8)) {
             this.position = new Vector3i(readLong());
@@ -65,6 +75,9 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
     @Override
     public void write() {
         writeInt(this.effectId);
+        if (this.effectId == 2001) {
+            writeByte(this.direction.getHorizontalIndex());
+        }
         if (serverVersion.isNewerThanOrEquals(ServerVersion.V_1_8)) {
             long positionVector = this.position.getSerializedPosition();
             writeLong(positionVector);
