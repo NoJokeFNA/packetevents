@@ -91,8 +91,14 @@ public class TypesBuilder {
             if (fileMappings.has(v.name())) {
                 JsonObject jsonMap = fileMappings.getAsJsonObject(v.name());
                 if (jsonMap.has(key)) {
-                    int id = jsonMap.get(key).getAsInt();
-                    ids[index] = id;
+                    JsonElement element = jsonMap.get(key);
+                    if (element.getAsString().contains(":")) {
+                        int id = Integer.parseInt(element.getAsString().split(":")[0]);
+                        ids[index] = id;
+                    }
+                    else {
+                        ids[index] = element.getAsInt();
+                    }
                 }
                 else {
                     ids[index] = -1;

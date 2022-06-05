@@ -28,10 +28,12 @@ import com.github.retrooper.packetevents.util.Vector3i;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
+
 public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffect> {
     private int effectId;
     private @Nullable Direction direction;
-    private EffectType effectType;
+    private @Nullable EffectType effectType;
     private Vector3i position;
     private int data;
     private boolean disableRelativeVolume;
@@ -40,7 +42,7 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
         super(event);
     }
 
-    public WrapperPlayServerEffect(int effectId, EffectType effectType, @Nullable Direction direction, Vector3i position, int data, boolean disableRelativeVolume) {
+    public WrapperPlayServerEffect(int effectId, @Nullable EffectType effectType, @Nullable Direction direction, Vector3i position, int data, boolean disableRelativeVolume) {
         super(PacketType.Play.Server.EFFECT);
         this.effectId = effectId;
         this.direction = direction;
@@ -59,7 +61,11 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
             System.out.println(" -> " + direction.name() + " -> " + direction.getHorizontalIndex());
         }
 
+        System.out.println(this.effectId);
         this.effectType = EffectTypes.getById(serverVersion.toClientVersion(), this.effectId);
+        if (this.getEffectType().isPresent()) {
+            System.out.println(this.effectType.getName() + " -> " + this.effectType.getId(serverVersion.toClientVersion()));
+        }
         if (serverVersion.isNewerThanOrEquals(ServerVersion.V_1_8)) {
             this.position = new Vector3i(readLong());
         } else {
@@ -98,11 +104,27 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
         this.disableRelativeVolume = wrapper.disableRelativeVolume;
     }
 
-    public EffectType getEffectType() {
-        return effectType;
+    public int getEffectId() {
+        return effectId;
     }
 
-    public void setEffectType(EffectType effectType) {
+    public void setEffectId(int effectId) {
+        this.effectId = effectId;
+    }
+
+    public Optional<Direction> getDirection() {
+        return Optional.ofNullable(direction);
+    }
+
+    public void setDirection(@Nullable Direction direction) {
+        this.direction = direction;
+    }
+
+    public Optional<EffectType> getEffectType() {
+        return Optional.ofNullable(effectType);
+    }
+
+    public void setEffectType(@Nullable EffectType effectType) {
         this.effectType = effectType;
     }
 
