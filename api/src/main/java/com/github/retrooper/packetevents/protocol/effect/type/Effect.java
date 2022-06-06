@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Effect {
-    private static final Map<String, IEffect> EFFECT_TYPE_MAPPINGS;
-    private static final Map<Byte, Map<Integer, IEffect>> EFFECT_TYPE_ID_MAPPINGS;
+    private static final Map<String, Effects> EFFECT_TYPE_MAPPINGS;
+    private static final Map<Byte, Map<Integer, Effects>> EFFECT_TYPE_ID_MAPPINGS;
     private static final TypesBuilder TYPES_BUILDER;
 
     static {
@@ -33,9 +33,9 @@ public class Effect {
                 ClientVersion.V_1_18);
     }
 
-    public static IEffect define(@NotNull final String key) {
+    public static Effects define(@NotNull final String key) {
         final TypesBuilderData data = TYPES_BUILDER.define(key);
-        final IEffect IEffect = new IEffect() {
+        final Effects effect = new Effects() {
             @Override
             public ResourceLocation getName() {
                 return data.getName();
@@ -49,81 +49,81 @@ public class Effect {
 
             @Override
             public boolean equals(Object obj) {
-                if (obj instanceof IEffect) {
-                    return getName() == ((IEffect) obj).getName();
+                if (obj instanceof Effects) {
+                    return getName() == ((Effects) obj).getName();
                 }
                 return false;
             }
         };
 
-        EFFECT_TYPE_MAPPINGS.put(IEffect.getName().getKey(), IEffect);
+        EFFECT_TYPE_MAPPINGS.put(effect.getName().getKey(), effect);
         for (ClientVersion version : TYPES_BUILDER.getVersions()) {
             final int index = TYPES_BUILDER.getDataIndex(version);
-            final Map<Integer, IEffect> typeIdMap = EFFECT_TYPE_ID_MAPPINGS.computeIfAbsent((byte) index, k -> new HashMap<>());
-            typeIdMap.put(IEffect.getId(version), IEffect);
+            final Map<Integer, Effects> typeIdMap = EFFECT_TYPE_ID_MAPPINGS.computeIfAbsent((byte) index, k -> new HashMap<>());
+            typeIdMap.put(effect.getId(version), effect);
         }
-        return IEffect;
+        return effect;
     }
 
     @Nullable
-    public static IEffect getByName(@NotNull final String name) {
+    public static Effects getByName(@NotNull final String name) {
         return EFFECT_TYPE_MAPPINGS.get(name);
     }
 
     @Nullable
-    public static IEffect getById(@NotNull final ClientVersion version, final int id) {
+    public static Effects getById(@NotNull final ClientVersion version, final int id) {
         final int index = TYPES_BUILDER.getDataIndex(version);
-        final Map<Integer, IEffect> typeIdMap = EFFECT_TYPE_ID_MAPPINGS.get((byte) index);
+        final Map<Integer, Effects> typeIdMap = EFFECT_TYPE_ID_MAPPINGS.get((byte) index);
         return typeIdMap.get(id);
     }
 
-    public static final IEffect CLICK2 = define("bow_fire");
-    public static final IEffect CLICK1 = define("bow_fire");
-    public static final IEffect BOW_FIRE = define("bow_fire");
-    public static final IEffect DOOR_TOGGLE = define("door_toggle");
-    public static final IEffect EXTINGUISH = define("extinguish");
-    public static final IEffect RECORD_PLAY = define("record_play");
-    public static final IEffect GHAST_SHRIEK = define("ghast_shriek");
-    public static final IEffect GHAST_SHOOT = define("ghast_shoot");
-    public static final IEffect BALZE_SHOOT = define("blaze_shoot");
-    public static final IEffect ZOMBIE_CHEW_WOODEN_DOOR = define("zombie_chew_wooden_door");
-    public static final IEffect ZOMBIE_CHEW_IRON_DOOR = define("zombie_chew_iron_door");
-    public static final IEffect ZOMBIE_DESTROY_DOOR = define("zombie_destroy_door");
-    public static final IEffect SMOKE = define("smoke");
-    public static final IEffect STEP_SOUND = define("step_sound");
-    public static final IEffect POTION_BREAK = define("potion_break");
-    public static final IEffect ENDER_SIGNAL = define("ender_signal");
-    public static final IEffect MOBSPAWNER_FLAMES = define("mobspawner_flames");
+    public static final Effects CLICK2 = define("bow_fire");
+    public static final Effects CLICK1 = define("bow_fire");
+    public static final Effects BOW_FIRE = define("bow_fire");
+    public static final Effects DOOR_TOGGLE = define("door_toggle");
+    public static final Effects EXTINGUISH = define("extinguish");
+    public static final Effects RECORD_PLAY = define("record_play");
+    public static final Effects GHAST_SHRIEK = define("ghast_shriek");
+    public static final Effects GHAST_SHOOT = define("ghast_shoot");
+    public static final Effects BALZE_SHOOT = define("blaze_shoot");
+    public static final Effects ZOMBIE_CHEW_WOODEN_DOOR = define("zombie_chew_wooden_door");
+    public static final Effects ZOMBIE_CHEW_IRON_DOOR = define("zombie_chew_iron_door");
+    public static final Effects ZOMBIE_DESTROY_DOOR = define("zombie_destroy_door");
+    public static final Effects SMOKE = define("smoke");
+    public static final Effects STEP_SOUND = define("step_sound");
+    public static final Effects POTION_BREAK = define("potion_break");
+    public static final Effects ENDER_SIGNAL = define("ender_signal");
+    public static final Effects MOBSPAWNER_FLAMES = define("mobspawner_flames");
 
     // 1.12
-    public static final IEffect IRON_DOOR_TOGGLE = define("iron_door_toggle");
-    public static final IEffect TRAPDOOR_TOGGLE = define("trapdoor_toggle");
-    public static final IEffect IRON_TRAPDOOR_TOGGLE = define("iron_trapdoor_toggle");
-    public static final IEffect FENCE_GATE_TOGGLE = define("fence_gate_toggle");
-    public static final IEffect DOOR_CLOSE = define("door_close");
-    public static final IEffect IRON_DOOR_CLOSE = define("iron_door_close");
-    public static final IEffect TRAPDOOR_CLOSE = define("trapdoor_close");
-    public static final IEffect IRON_TRAPDOOR_CLOSE = define("iron_trapdoor_close");
-    public static final IEffect FENCE_GATE_CLOSE = define("fence_gate_close");
-    public static final IEffect BREWING_STAND_BREW = define("brewing_stand_brew");
-    public static final IEffect CHORUS_FLOWER_GROW = define("chorus_flower_grow");
-    public static final IEffect CHORUS_FLOWER_DEATH = define("chorus_flower_death");
-    public static final IEffect PORTAL_TRAVEL = define("portal_travel");
-    public static final IEffect ENDEREYE_LAUNCH = define("endereye_launch");
-    public static final IEffect FIREWORK_SHOOT = define("firework_shoot");
-    public static final IEffect VILLAGER_PLANT_GROW = define("villager_plant_grow");
-    public static final IEffect DRAGON_BREATH = define("dragon_breath");
-    public static final IEffect ANVIL_BREAK = define("anvil_break");
-    public static final IEffect ANVIL_USE = define("anvil_use");
-    public static final IEffect ANVIL_LAND = define("anvil_land");
-    public static final IEffect ENDERDRAGON_SHOOT = define("enderdragon_shoot");
-    public static final IEffect WITHER_BREAK_BLOCK = define("wither_break_block");
-    public static final IEffect WITHER_SHOOT = define("wither_shoot");
-    public static final IEffect ZOMBIE_INFECT_ = define("zombie_infect");
-    public static final IEffect ZOMBIE_CONVERTED_VILLAGER = define("zombie_converted_villager");
-    public static final IEffect BAT_TAKEOFF = define("bat_takeoff");
-    public static final IEffect END_GATEWAY_SPAWN = define("end_gateway_spawn");
-    public static final IEffect ENDERDRAGON_GROWL = define("enderdragon_growl");
+    public static final Effects IRON_DOOR_TOGGLE = define("iron_door_toggle");
+    public static final Effects TRAPDOOR_TOGGLE = define("trapdoor_toggle");
+    public static final Effects IRON_TRAPDOOR_TOGGLE = define("iron_trapdoor_toggle");
+    public static final Effects FENCE_GATE_TOGGLE = define("fence_gate_toggle");
+    public static final Effects DOOR_CLOSE = define("door_close");
+    public static final Effects IRON_DOOR_CLOSE = define("iron_door_close");
+    public static final Effects TRAPDOOR_CLOSE = define("trapdoor_close");
+    public static final Effects IRON_TRAPDOOR_CLOSE = define("iron_trapdoor_close");
+    public static final Effects FENCE_GATE_CLOSE = define("fence_gate_close");
+    public static final Effects BREWING_STAND_BREW = define("brewing_stand_brew");
+    public static final Effects CHORUS_FLOWER_GROW = define("chorus_flower_grow");
+    public static final Effects CHORUS_FLOWER_DEATH = define("chorus_flower_death");
+    public static final Effects PORTAL_TRAVEL = define("portal_travel");
+    public static final Effects ENDEREYE_LAUNCH = define("endereye_launch");
+    public static final Effects FIREWORK_SHOOT = define("firework_shoot");
+    public static final Effects VILLAGER_PLANT_GROW = define("villager_plant_grow");
+    public static final Effects DRAGON_BREATH = define("dragon_breath");
+    public static final Effects ANVIL_BREAK = define("anvil_break");
+    public static final Effects ANVIL_USE = define("anvil_use");
+    public static final Effects ANVIL_LAND = define("anvil_land");
+    public static final Effects ENDERDRAGON_SHOOT = define("enderdragon_shoot");
+    public static final Effects WITHER_BREAK_BLOCK = define("wither_break_block");
+    public static final Effects WITHER_SHOOT = define("wither_shoot");
+    public static final Effects ZOMBIE_INFECT_ = define("zombie_infect");
+    public static final Effects ZOMBIE_CONVERTED_VILLAGER = define("zombie_converted_villager");
+    public static final Effects BAT_TAKEOFF = define("bat_takeoff");
+    public static final Effects END_GATEWAY_SPAWN = define("end_gateway_spawn");
+    public static final Effects ENDERDRAGON_GROWL = define("enderdragon_growl");
 
-    public static Collection<IEffect> values = EFFECT_TYPE_MAPPINGS.values();
+    public static Collection<Effects> values = EFFECT_TYPE_MAPPINGS.values();
 }

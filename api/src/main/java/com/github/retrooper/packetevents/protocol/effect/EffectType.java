@@ -1,20 +1,20 @@
 package com.github.retrooper.packetevents.protocol.effect;
 
-import com.github.retrooper.packetevents.protocol.effect.type.IEffect;
+import com.github.retrooper.packetevents.protocol.effect.type.Effects;
 import org.jetbrains.annotations.NotNull;
 
 public class EffectType {
-    private IEffect effect;
+    private Effects effect;
 
-    public EffectType(@NotNull final IEffect effect) {
+    public EffectType(@NotNull final Effects effect) {
         this.effect = effect;
     }
 
-    public IEffect getEffect() {
+    public Effects getEffect() {
         return effect;
     }
 
-    public void setEffect(IEffect effect) {
+    public void setEffect(Effects effect) {
         this.effect = effect;
     }
 
