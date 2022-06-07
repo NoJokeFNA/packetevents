@@ -33,7 +33,7 @@ import java.util.Optional;
 public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffect> {
     private int effectId;
     private @Nullable Direction direction;
-    private @Nullable Effects Effects;
+    private @Nullable Effects effects;
     private Vector3i position;
     private int data;
     private boolean disableRelativeVolume;
@@ -42,11 +42,11 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
         super(event);
     }
 
-    public WrapperPlayServerEffect(int effectId, @Nullable Effects Effects, @Nullable Direction direction, Vector3i position, int data, boolean disableRelativeVolume) {
+    public WrapperPlayServerEffect(int effectId, @Nullable Effects effects, @Nullable Direction direction, Vector3i position, int data, boolean disableRelativeVolume) {
         super(PacketType.Play.Server.EFFECT);
         this.effectId = effectId;
         this.direction = direction;
-        this.Effects = Effects;
+        this.effects = effects;
         this.position = position;
         this.data = data;
         this.disableRelativeVolume = disableRelativeVolume;
@@ -55,17 +55,7 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
     @Override
     public void read() {
         this.effectId = readInt();
-        if (this.effectId == 2000) {
-            System.out.println("HI!");
-            this.direction = Direction.getByHorizontalIndex(readUnsignedByte());
-            System.out.println(" -> " + direction.name() + " -> " + direction.getHorizontalIndex());
-        }
-
-        System.out.println(this.effectId);
-        this.Effects = Effect.getById(serverVersion.toClientVersion(), this.effectId);
-        if (this.getEffectType().isPresent()) {
-            System.out.println(this.Effects.getName() + " -> " + this.Effects.getId(serverVersion.toClientVersion()));
-        }
+        this.effects = Effect.getById(serverVersion.toClientVersion(), this.effectId);
         if (serverVersion.isNewerThanOrEquals(ServerVersion.V_1_8)) {
             this.position = new Vector3i(readLong());
         } else {
@@ -98,7 +88,7 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
 
     @Override
     public void copy(WrapperPlayServerEffect wrapper) {
-        this.Effects = wrapper.Effects;
+        this.effects = wrapper.effects;
         this.position = wrapper.position;
         this.data = wrapper.data;
         this.disableRelativeVolume = wrapper.disableRelativeVolume;
@@ -121,11 +111,11 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
     }
 
     public Optional<Effects> getEffectType() {
-        return Optional.ofNullable(Effects);
+        return Optional.ofNullable(effects);
     }
 
     public void setEffectType(@Nullable Effects Effects) {
-        this.Effects = Effects;
+        this.effects = Effects;
     }
 
     public Vector3i getPosition() {
