@@ -37,4 +37,7 @@ public enum DiggingAction {
         return ordinal();
     }
 
+    public static DiggingAction getById(int id) {
+        return VALUES[id];
+    }
 }

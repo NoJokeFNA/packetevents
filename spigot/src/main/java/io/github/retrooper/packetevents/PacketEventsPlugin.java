@@ -23,6 +23,7 @@ import com.github.retrooper.packetevents.event.*;
 import com.github.retrooper.packetevents.event.simple.PacketPlayReceiveEvent;
 import com.github.retrooper.packetevents.event.simple.PacketPlaySendEvent;
 import com.github.retrooper.packetevents.netty.channel.ChannelHelper;
+import com.github.retrooper.packetevents.protocol.chat.ChatPosition;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import com.github.retrooper.packetevents.protocol.item.ItemStack;
 import com.github.retrooper.packetevents.protocol.npc.NPC;
@@ -84,7 +85,7 @@ public class PacketEventsPlugin extends JavaPlugin {
                 User user = event.getUser();
                 Player player = (Player) event.getPlayer();
                 switch (event.getPacketType()) {
-                    case CHAT_MESSAGE:
+                    case SYSTEM_CHAT_MESSAGE:
                         System.out.println("Running 10 seconds later");
                         WrapperPlayClientChatMessage chatMessage = new WrapperPlayClientChatMessage(event);
                         if (chatMessage.getMessage().equalsIgnoreCase("keyword")) {
@@ -159,6 +160,21 @@ public class PacketEventsPlugin extends JavaPlugin {
                                 }
                             }
                         }
+                        else if (chatMessage.getMessage().equalsIgnoreCase("copium")) {
+                            new Thread(() -> {
+                                Component message = Component.text("Hi lmao");
+                                WrapperPlayServerSystemChatMessage cm = new WrapperPlayServerSystemChatMessage(message, ChatPosition.CHAT);
+                                for (int i = 0; i < 10; i++) {
+                                    System.out.println("Sent!");
+                                    user.sendPacket(cm);
+                                    try {
+                                        Thread.sleep(1000L);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }).start();
+                        }
                         break;
                     case PLAYER_FLYING:
                     case PLAYER_POSITION:
@@ -214,8 +230,8 @@ public class PacketEventsPlugin extends JavaPlugin {
                         user.sendMessage(ChatColor.RED + "player null, but hi dude!!!");
                     }
                     System.out.println("Pipeline: " + ChannelHelper.pipelineHandlerNamesAsString(event.getChannel()));
-                } else if (event.getPacketType() == PacketType.Play.Server.CHAT_MESSAGE) {
-                    WrapperPlayServerChatMessage chatMessage = new WrapperPlayServerChatMessage(event);
+                } else if (event.getPacketType() == PacketType.Play.Server.SYSTEM_CHAT_MESSAGE) {
+                    WrapperPlayServerSystemChatMessage chatMessage = new WrapperPlayServerSystemChatMessage(event);
                     /*event.setCancelled(true);
                     Object buffer = chatMessage.getBuffer();
                     Object copy = ByteBufHelper.duplicate(buffer);
@@ -265,7 +281,7 @@ public class PacketEventsPlugin extends JavaPlugin {
                 System.out.println("User: (host-name) " + event.getUser().getAddress().getHostString() + " disconnected...");
             }
         };
-        PacketEvents.getAPI().getEventManager().registerListener(listener);
+        //PacketEvents.getAPI().getEventManager().registerListener(listener);
     }
 
     @Override

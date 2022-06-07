@@ -18,25 +18,41 @@
 
 package com.github.retrooper.packetevents.protocol.packettype.clientbound;
 
-public enum ClientboundPacketType_1_16_2 {
+public enum ClientboundPacketType_1_19 {
     SPAWN_ENTITY,
     SPAWN_EXPERIENCE_ORB,
-    SPAWN_LIVING_ENTITY,
-    SPAWN_PAINTING,
+
+    //Removed in 1.19
+    //SPAWN_LIVING_ENTITY,
+    //SPAWN_PAINTING,
+
     SPAWN_PLAYER,
+
+    //Removed in 1.19
+    //SCULK_VIBRATION_SIGNAL,
+
     ENTITY_ANIMATION,
     STATISTICS,
-    ACKNOWLEDGE_PLAYER_DIGGING,
+    //Removed in 1.19 and replaced with ACKNOWLEDGE_BLOCK_CHANGES
+    //ACKNOWLEDGE_PLAYER_DIGGING,
+
+    //Added in 1.19
+    ACKNOWLEDGE_BLOCK_CHANGES,
+
     BLOCK_BREAK_ANIMATION,
     BLOCK_ENTITY_DATA,
     BLOCK_ACTION,
     BLOCK_CHANGE,
     BOSS_BAR,
     SERVER_DIFFICULTY,
-    SYSTEM_CHAT_MESSAGE,
+
+    //Added in 1.19. This is used by vanilla to broadcast messages sent by clients to all connected clients.
+    //This is also encrypted.
+    PLAYER_CHAT_MESSAGE,
+
+    CLEAR_TITLES,
     TAB_COMPLETE,
     DECLARE_COMMANDS,
-    WINDOW_CONFIRMATION,
     CLOSE_WINDOW,
     WINDOW_ITEMS,
     WINDOW_PROPERTY,
@@ -50,7 +66,9 @@ public enum ClientboundPacketType_1_16_2 {
     UNLOAD_CHUNK,
     CHANGE_GAME_STATE,
     OPEN_HORSE_WINDOW,
+    INITIALIZE_WORLD_BORDER,
     KEEP_ALIVE,
+    //This is also used for lighting
     CHUNK_DATA,
     EFFECT,
     PARTICLE,
@@ -61,26 +79,36 @@ public enum ClientboundPacketType_1_16_2 {
     ENTITY_RELATIVE_MOVE,
     ENTITY_RELATIVE_MOVE_AND_ROTATION,
     ENTITY_ROTATION,
-    ENTITY_MOVEMENT,
     VEHICLE_MOVE,
     OPEN_BOOK,
     OPEN_WINDOW,
     OPEN_SIGN_EDITOR,
+    PING,
     CRAFT_RECIPE_RESPONSE,
     PLAYER_ABILITIES,
-    COMBAT_EVENT,
+    END_COMBAT_EVENT,
+    ENTER_COMBAT_EVENT,
+    DEATH_COMBAT_EVENT,
     PLAYER_INFO,
     FACE_PLAYER,
     PLAYER_POSITION_AND_LOOK,
     UNLOCK_RECIPES,
+
+    //Since 1.17.1 you can destroy multiple entities again
     DESTROY_ENTITIES,
+
     REMOVE_ENTITY_EFFECT,
     RESOURCE_PACK_SEND,
     RESPAWN,
     ENTITY_HEAD_LOOK,
     MULTI_BLOCK_CHANGE,
     SELECT_ADVANCEMENT_TAB,
-    WORLD_BORDER,
+    ACTION_BAR,
+    WORLD_BORDER_CENTER,
+    WORLD_BORDER_LERP_SIZE,
+    WORLD_BORDER_SIZE,
+    WORLD_BORDER_WARNING_DELAY,
+    WORLD_BORDER_WARNING_REACH,
     CAMERA,
     HELD_ITEM_CHANGE,
     UPDATE_VIEW_POSITION,
@@ -97,11 +125,18 @@ public enum ClientboundPacketType_1_16_2 {
     SET_PASSENGERS,
     TEAMS,
     UPDATE_SCORE,
+    UPDATE_SIMULATION_DISTANCE,
+    SET_TITLE_SUBTITLE,
     TIME_UPDATE,
-    TITLE,
+    SET_TITLE_TEXT,
+    SET_TITLE_TIMES,
     ENTITY_SOUND_EFFECT,
     SOUND_EFFECT,
     STOP_SOUND,
+
+    //Purpose changed in 1.19. This is now used only for system messages by vanilla.
+    SYSTEM_CHAT_MESSAGE,
+
     PLAYER_LIST_HEADER_AND_FOOTER,
     NBT_QUERY_RESPONSE,
     COLLECT_ITEM,
