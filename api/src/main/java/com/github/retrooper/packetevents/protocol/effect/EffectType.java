@@ -23,10 +23,10 @@ public class EffectType {
     }
 
     public enum Type {
-        SOUND(),
-        VISUAL();
+        SOUND,
+        VISUAL;
 
-        public static Type getType(String key) {
+        public static Type getType(@NotNull final String key) {
             if (key.equals("sound")) {
                 return SOUND;
             } else if (key.equals("visual")) {
