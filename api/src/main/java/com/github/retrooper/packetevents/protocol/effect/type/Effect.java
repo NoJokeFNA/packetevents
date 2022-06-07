@@ -77,8 +77,8 @@ public class Effect {
         return typeIdMap.get(id);
     }
 
-    public static final Effects CLICK2 = define("bow_fire");
-    public static final Effects CLICK1 = define("bow_fire");
+    public static final Effects CLICK2 = define("click2");
+    public static final Effects CLICK1 = define("click1");
     public static final Effects BOW_FIRE = define("bow_fire");
     public static final Effects DOOR_TOGGLE = define("door_toggle");
     public static final Effects EXTINGUISH = define("extinguish");
@@ -124,6 +124,50 @@ public class Effect {
     public static final Effects BAT_TAKEOFF = define("bat_takeoff");
     public static final Effects END_GATEWAY_SPAWN = define("end_gateway_spawn");
     public static final Effects ENDERDRAGON_GROWL = define("enderdragon_growl");
+
+    // 1.15
+    public static final Effects INSTANT_POTION_BREAK = define("instant_potion_break");
+
+    // 1.16
+    public static final Effects WITHER_SPAWNED = define("wither_spawned");
+    public static final Effects ENDER_DRAGON_DEATH = define("ender_dragon_death");
+    public static final Effects END_PORTAL_CREATED_IN_OVERWORLD = define("end_portal_created_in_overworld");
+    public static final Effects PHANTOM_BITES = define("phantom_bites");
+    public static final Effects ZOMBIE_CONVERTS_TO_DROWNED = define("zombie_converts_to_drowned");
+    public static final Effects HUSK_CONVERTS_TO_ZOMBIE = define("husk_converts_to_zombie");
+    public static final Effects GRINDSTONE_USED = define("grindstone_used");
+    public static final Effects BOOK_PAGE_TURNED = define("book_page_turned");
+    public static final Effects COMPOSTER_COMPOSTS = define("composter_composts");
+    public static final Effects LAVA_CONVERTS_BLOCK = define("lava_converts_block");
+    public static final Effects REDSTONE_TORCH_BURN = define("redstone_torch_burns_out");
+    public static final Effects ENDER_EYE_PLACED = define("ender_eye_placed");
+    public static final Effects ENDER_DRAGON_DESTROYS_BLOCK = define("ender_dragon_destroys_block");
+    public static final Effects WET_SPONGE_VAPORIZES_IN_NETHER = define("wet_sponge_vaporizes_in_nether");
+
+
+    // 1.17
+    public static final Effects PHANTOM_BITE = define("phantom_bite");
+    public static final Effects ZOMBIE_CONVERTED_TO_DROWNED = define("zombie_converted_to_drowned");
+    public static final Effects HUSK_CONVERTED_TO_ZOMBIE = define("husk_converted_to_zombie");
+    public static final Effects GRINDSTONE_USE = define("grindstone_use");
+    public static final Effects BOOK_PAGE_TURN = define("book_page_turn");
+    public static final Effects SMITHING_TABLE_USE = define("smithing_table_use");
+    public static final Effects POINTED_DRIPSTONE_LAND = define("pointed_dripstone_land");
+    public static final Effects POINTED_DRIPSTONE_DRIP_LAVA_INTO_CAULDRON = define("pointed_dripstone_drip_lava_into_cauldron");
+    public static final Effects POINTED_DRIPSTONE_DRIP_WATER_INTO_CAULDRON = define("pointed_dripstone_drip_water_into_cauldron");
+    public static final Effects SKELETON_CONVERTED_TO_STRAY = define("skeleton_converted_to_stray");
+    public static final Effects COMPOSTER_FILL_ATTEMPT = define("composter_fill_attempt");
+    public static final Effects LAVA_INTERACT = define("lava_interact");
+    public static final Effects REDSTONE_TORCH_BURNOUT = define("redstone_torch_burnout");
+    public static final Effects END_PORTAL_FRAME_FILL = define("end_portal_frame_fill");
+    public static final Effects DRIPS_DRIPSTONE = define("dripping_dripstone");
+    public static final Effects BONE_MEAL_USE = define("bone_meal_use");
+    public static final Effects ENDER_DRAGON_DESTROY_BLOCK = define("ender_dragon_destroy_block");
+    public static final Effects SPONGE_DRY = define("sponge_dry");
+    public static final Effects ELECTRIC_SPARK = define("electric_spark");
+    public static final Effects COPPER_WAX_ON = define("copper_wax_on");
+    public static final Effects COPPER_WAX_OFF = define("copper_wax_off");
+    public static final Effects OXIDISED_COPPER_SCRAPE = define("oxidised_copper_scrape");
 
     public static Collection<Effects> values = EFFECT_TYPE_MAPPINGS.values();
 }
