@@ -20,6 +20,7 @@ package io.github.retrooper.packetevents.injector;
 
 import com.google.common.collect.ForwardingSet;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Set;
@@ -51,7 +52,7 @@ public class SetWrapper<E> extends ForwardingSet<E> {
     }
 
     @Override
-    protected Set<E> delegate() {
+    protected @NotNull Set<E> delegate() {
         return originalSet();
     }
 

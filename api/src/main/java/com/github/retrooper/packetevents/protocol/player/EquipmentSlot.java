@@ -30,7 +30,7 @@ public enum EquipmentSlot {
     HELMET(4);
 
     private static final EquipmentSlot[] VALUES = values();
-
+  
     private final byte legacyId;
 
     EquipmentSlot(int legacyId) {

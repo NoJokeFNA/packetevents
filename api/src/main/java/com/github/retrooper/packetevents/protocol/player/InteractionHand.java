@@ -37,4 +37,8 @@ public enum InteractionHand {
     public static InteractionHand getById(int id) {
         return VALUES[id];
     }
+
+    public int getId() {
+        return this == MAIN_HAND ? 0 : 1;
+    }
 }

@@ -20,6 +20,8 @@
 
 package com.github.retrooper.packetevents.netty.buffer;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -43,13 +45,13 @@ public class ByteBufOutputStream extends OutputStream implements DataOutput {
         return ByteBufHelper.writerIndex(buffer) - this.startIndex;
     }
 
-    public void write(byte[] b, int off, int len) throws IOException {
+    public void write(byte @NotNull [] b, int off, int len) throws IOException {
         if (len != 0) {
             ByteBufHelper.writeBytes(buffer, b, off, len);
         }
     }
 
-    public void write(byte[] b) throws IOException {
+    public void write(byte @NotNull [] b) throws IOException {
         ByteBufHelper.writeBytes(buffer, b);
     }
 
@@ -66,7 +68,7 @@ public class ByteBufOutputStream extends OutputStream implements DataOutput {
     }
 
     @Deprecated
-    public void writeBytes(String s) throws IOException {
+    public void writeBytes(@NotNull String s) throws IOException {
         throw new IllegalStateException("This operation is not supported!");
     }
 
@@ -103,7 +105,7 @@ public class ByteBufOutputStream extends OutputStream implements DataOutput {
         ByteBufHelper.writeShort(buffer, v);
     }
 
-    public void writeUTF(String s) throws IOException {
+    public void writeUTF(@NotNull String s) throws IOException {
         this.utf8out.writeUTF(s);
     }
 

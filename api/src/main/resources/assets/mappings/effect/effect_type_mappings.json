@@ -1,0 +1,95 @@
+{
+  "V_1_18": {
+    "ambient_basalt_deltas_additions": 0
+  },
+  "V_1_17": {
+    "ambient_basalt_deltas_additions": 1
+  },
+  "V_1_16": {
+    "ambient_basalt_deltas_additions": 2
+  },
+  "V_1_15": {
+    "ambient_basalt_deltas_additions": 1
+  },
+  "V_1_14": {
+    "ambient_basalt_deltas_additions": 1
+  },
+  "V_1_13": {
+    "ambient_basalt_deltas_additions": 1
+  },
+  "V_1_12": {
+    "click2": "1000:sound",
+    "click1": "1001:sound",
+    "bow_fire": "1002:sound",
+    "door_toggle": "1006:sound",
+    "iron_door_toggle": "1005:sound",
+    "trapdoor_toggle": "1007:sound",
+    "iron_trapdoor_toggle": "1037:sound",
+    "fence_gate_toggle": "1008:sound",
+    "door_close": "1012:sound",
+    "iron_door_close": "1011:sound",
+    "trapdoor_close": "1013:sound",
+    "iron_trapdoor_close": "1036:sound",
+    "fence_gate_close": "1014:sound",
+    "extinguish": "1009:sound",
+    "record_play": "10010:sound",
+    "ghast_shriek": "10015:sound",
+    "ghast_shoot": "10015:sound",
+    "blaze_shoot": "10018:sound",
+    "zombie_chew_wooden_door": "1019:sound",
+    "zombie_chew_iron_door": "1020:sound",
+    "zombie_destroy_door": "1021:sound",
+    "smoke": "2000:visual",
+    "step_sound": "2001:sound",
+    "potion_break": "2002:visual",
+    "ender_signal": "2003:visual",
+    "mobspawner_flames": "2004:visual",
+    "brewing_stand_brew": "1035:sound",
+    "chorus_flower_grow": "1033:sound",
+    "chorus_flower_death": "1034:sound",
+    "portal_travel": "1032:sound",
+    "endereye_launch": "1003:sound",
+    "firework_shoot": "1004:sound",
+    "villager_plant_grow": "2005:sound",
+    "dragon_breath": "2006:sound",
+    "anvil_break": "1029:sound",
+    "anvil_use": "1030:sound",
+    "anvil_land": "1031:sound",
+    "enderdragon_shoot": "1017:sound",
+    "wither_break_block": "1022:sound",
+    "wither_shoot": "1024:sound",
+    "zombie_infect": "1026:sound",
+    "zombie_converted_villager": "1027:sound",
+    "bat_takeoff": "1025:sound",
+    "end_gateway_spawn": "3000:visual",
+    "enderdragon_growl": "3001:sound"
+  },
+  "V_1_11": {
+    "ambient_basalt_deltas_additions": 1
+  },
+  "V_1_10": {
+    "ambient_basalt_deltas_additions": 1
+  },
+  "V_1_9": {
+    "ambient_basalt_deltas_additions": 1
+  },
+  "V_1_8": {
+    "click2": "1000:sound",
+    "click1": "1001:sound",
+    "bow_fire": "1002:sound",
+    "door_toggle": "1003:sound",
+    "extinguish": "1004:sound",
+    "record_play": "1005:sound",
+    "ghast_shriek": "1007:sound",
+    "ghast_shoot": "1008:sound",
+    "blaze_shoot": "1009:sound",
+    "zombie_chew_wooden_door": "1010:sound",
+    "zombie_chew_iron_door": "1011:sound",
+    "zombie_destroy_door": "1012:sound",
+    "smoke": "2000:visual",
+    "step_sound": "2001:sound",
+    "potion_break": "2002:visual",
+    "ender_signal": "2003:visual",
+    "mobspawner_flames": "2004:visual"
+  }
+}

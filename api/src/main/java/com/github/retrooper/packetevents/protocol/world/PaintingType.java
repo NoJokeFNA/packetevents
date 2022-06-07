@@ -50,8 +50,9 @@ public enum PaintingType {
     SKELETON("Skeleton"),
     DONKEY_KONG("DonkeyKong");
 
-    private final String title;
+    private static final PaintingType[] VALUES = values();
     private static final Map<String, PaintingType> TITLE_TO_NAME_MAP = new HashMap<>();
+    private final String title;
 
     PaintingType(String title) {
         this.title = title;

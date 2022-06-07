@@ -406,21 +406,16 @@ public class BoundingBox {
         }
     }
 
+    @Override
     public String toString() {
-        String builder = "BoundingBox [minX=" +
-                this.minX +
-                ", minY=" +
-                this.minY +
-                ", minZ=" +
-                this.minZ +
-                ", maxX=" +
-                this.maxX +
-                ", maxY=" +
-                this.maxY +
-                ", maxZ=" +
-                this.maxZ +
-                "]";
-        return builder;
+        return "BoundingBox{" +
+                "minX=" + minX +
+                ", minY=" + minY +
+                ", minZ=" + minZ +
+                ", maxX=" + maxX +
+                ", maxY=" + maxY +
+                ", maxZ=" + maxZ +
+                '}';
     }
 
     @NotNull

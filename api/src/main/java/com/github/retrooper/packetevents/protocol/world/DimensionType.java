@@ -35,6 +35,8 @@ public enum DimensionType {
         this.name = name;
     }
 
+    private static final DimensionType[] VALUES = values();
+
     public static DimensionType getById(int id) {
         return VALUES[id + 1];
     }

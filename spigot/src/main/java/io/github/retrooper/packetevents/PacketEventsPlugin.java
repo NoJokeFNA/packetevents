@@ -46,8 +46,8 @@ import io.github.retrooper.packetevents.util.SpigotDataHelper;
 import io.github.retrooper.packetevents.util.SpigotReflectionUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.material.MaterialData;
@@ -57,6 +57,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 public class PacketEventsPlugin extends JavaPlugin {
+
+    private static final org.bukkit.entity.EntityType[] VALUES = org.bukkit.entity.EntityType.values();
+
     @Override
     public void onLoad() {
         PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
@@ -65,6 +68,13 @@ public class PacketEventsPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        for (Effect value : Effect.values()) {
+            final Effect.Type type = value.getType();
+            if (type == Effect.Type.SOUND || type == Effect.Type.VISUAL) {
+                PacketEvents.getAPI().getLogger().info(value.name() + " -> " + value.getId() + " -> " + type);
+            }
+        }
+
         //Register your listeners
         PacketEvents.getAPI().getSettings().debug(false).bStats(true)
                 .checkForUpdates(true).timeStampMode(TimeStampMode.MILLIS).readOnlyListeners(false);
@@ -134,14 +144,14 @@ public class PacketEventsPlugin extends JavaPlugin {
                             user.sendMessage("Back to Bukkit itemstack type: " + backToBukkitStack.getType().name() + ", type: " + backToBukkitStack.getClass().getSimpleName());
 
                         } else if (chatMessage.getMessage().equalsIgnoreCase("test0")) {
-                            for (org.bukkit.entity.EntityType type : org.bukkit.entity.EntityType.values()) {
+                            for (org.bukkit.entity.EntityType type : VALUES) {
                                 EntityType entityType = SpigotDataHelper.fromBukkitEntityType(type);
                                 if (entityType != null) {
                                     System.out.println("EntityType: " + entityType.getName() + ", Bukkit type: " + type.getName());
                                 }
                             }
                         } else if (chatMessage.getMessage().equalsIgnoreCase("test1")) {
-                            for (org.bukkit.entity.EntityType type : org.bukkit.entity.EntityType.values()) {
+                            for (org.bukkit.entity.EntityType type : VALUES) {
                                 if (type.getTypeId() != -1) {
                                     EntityType entityType = SpigotDataHelper.fromBukkitEntityType(type);
                                     if (entityType == null) {
@@ -246,9 +256,12 @@ public class PacketEventsPlugin extends JavaPlugin {
                     System.out.println("Spawning a new entity of type: " + spawnEntity.getEntityType());
                 } else if (event.getPacketType() == PacketType.Play.Server.BLOCK_CHANGE) {
                     WrapperPlayServerBlockChange change = new WrapperPlayServerBlockChange(event);
-                    Bukkit.broadcastMessage(change.getBlockState().toString());
+                    //Bukkit.broadcastMessage(change.getBlockState().toString());
                 } else if (event.getPacketType() == PacketType.Play.Server.CHUNK_DATA) {
                     WrapperPlayServerChunkData data = new WrapperPlayServerChunkData(event);
+                } else if (event.getPacketType() == PacketType.Play.Server.EFFECT) {
+                    WrapperPlayServerEffect wrapper = new WrapperPlayServerEffect(event);
+                    System.out.println(wrapper.toString());
                 }
             }
 

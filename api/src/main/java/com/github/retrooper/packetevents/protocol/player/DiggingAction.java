@@ -29,6 +29,10 @@ public enum DiggingAction {
 
     private static final DiggingAction[] VALUES = values();
 
+    public static DiggingAction getById(int id) {
+        return VALUES[id];
+    }
+
     public int getId() {
         return ordinal();
     }
