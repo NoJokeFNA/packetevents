@@ -141,14 +141,4 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
     public void setDisableRelativeVolume(boolean disableRelativeVolume) {
         this.disableRelativeVolume = disableRelativeVolume;
     }
-
-    @Override
-    public String toString() {
-        return "WrapperPlayServerEffect{" +
-                "effectId=" + effectId +
-                ", position=" + position.getSerializedPosition() +
-                ", data=" + data +
-                ", disableRelativeVolume=" + disableRelativeVolume +
-                '}';
-    }
 }
