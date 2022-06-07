@@ -25,12 +25,11 @@ import com.github.retrooper.packetevents.protocol.player.HumanoidArm;
 import com.github.retrooper.packetevents.protocol.player.SkinSection;
 
 import java.util.List;
-import java.util.Set;
 
 public class PlayerDataProvider extends LivingEntityDataProvider {
     private float additionalHealth;
     private int score;
-    private byte skinPartsMask = SkinSection.getMaskBySections(SkinSection.getAllSections());
+    private byte skinPartsMask = SkinSection.ALL.getMask();
     private HumanoidArm mainArm = HumanoidArm.RIGHT;
     private NBTCompound leftShoulderNBT = new NBTCompound();
     private NBTCompound rightShoulderNBT = new NBTCompound();
@@ -146,8 +145,8 @@ public class PlayerDataProvider extends LivingEntityDataProvider {
             return (T)this;
         }
 
-        public T skinParts(Set<SkinSection> skinSections) {
-            ((PlayerDataProvider)provider).setSkinPartsMask(SkinSection.getMaskBySections(skinSections));
+        public T skinParts(SkinSection skinSections) {
+            ((PlayerDataProvider)provider).setSkinPartsMask(skinSections.getMask());
             return (T)this;
         }
 

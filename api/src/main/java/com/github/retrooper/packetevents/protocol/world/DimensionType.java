@@ -24,6 +24,9 @@ public enum DimensionType {
     NETHER(-1, "minecraft:the_nether"),
     OVERWORLD(0, "minecraft:overworld"),
     END(1, "minecraft:the_end");
+
+    private static final DimensionType[] VALUES = values();
+
     private final int id;
     private final String name;
 
