@@ -22,6 +22,8 @@ import com.github.retrooper.packetevents.event.PacketSendEvent;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.protocol.effect.type.Effect;
 import com.github.retrooper.packetevents.protocol.effect.type.Effects;
+import com.github.retrooper.packetevents.protocol.item.ItemStack;
+import com.github.retrooper.packetevents.protocol.item.type.ItemTypes;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.protocol.world.Direction;
 import com.github.retrooper.packetevents.protocol.world.states.WrappedBlockState;
@@ -30,7 +32,6 @@ import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
-import java.util.OptionalInt;
 
 public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffect> {
     private int effectId;
@@ -38,19 +39,14 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
     private Vector3i position;
     private int data;
     private boolean disableRelativeVolume;
-    private @Nullable Direction direction;
-    private int rgbColor;
-    private int particlesToSpawn;
-    private int blockTypeID;
 
     public WrapperPlayServerEffect(PacketSendEvent event) {
         super(event);
     }
 
-    public WrapperPlayServerEffect(int effectId, @Nullable Effects effects, @Nullable Direction direction, Vector3i position, int data, boolean disableRelativeVolume) {
+    public WrapperPlayServerEffect(int effectId, @Nullable Effects effects, Vector3i position, int data, boolean disableRelativeVolume) {
         super(PacketType.Play.Server.EFFECT);
         this.effectId = effectId;
-        this.direction = direction;
         this.effects = effects;
         this.position = position;
         this.data = data;
@@ -71,7 +67,6 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
         }
         this.data = readInt();
         this.disableRelativeVolume = readBoolean();
-        extraData(true);
     }
 
     @Override
@@ -87,7 +82,6 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
         }
         writeInt(this.data);
         writeBoolean(this.disableRelativeVolume);
-        extraData(false);
     }
 
     @Override
@@ -138,88 +132,30 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
         this.disableRelativeVolume = disableRelativeVolume;
     }
 
+    /**
+     * Gets the block-direction from {@code Effect#SMOKE} effect.
+     *
+     * @return The block-direction.
+     */
     public Optional<Direction> getDirection() {
-        return Optional.ofNullable(direction);
+        return Optional.ofNullable(Direction.getByHorizontalIndex(data));
     }
 
-    public void setDirection(@Nullable Direction direction) {
-        this.direction = direction;
+    /**
+     * Gets the item from {@code Effect#RECORD_PLAY} effect.
+     *
+     * @return The item.
+     */
+    public Optional<ItemStack> getItem() {
+        return Optional.ofNullable(new ItemStack.Builder().type(ItemTypes.getById(serverVersion.toClientVersion(), data)).build());
     }
 
-    public OptionalInt getRgbColor() {
-        return OptionalInt.of(rgbColor);
-    }
-
-    public void setRgbColor(int rgbColor) {
-        this.rgbColor = rgbColor;
-    }
-
-    public OptionalInt getParticlesToSpawn() {
-        return OptionalInt.of(particlesToSpawn);
-    }
-
-    public void setParticlesToSpawn(int particlesToSpawn) {
-        this.particlesToSpawn = particlesToSpawn;
-    }
-
-    public OptionalInt getBlockTypeID() {
-        return OptionalInt.of(blockTypeID);
-    }
-
-    public void setBlockTypeID(int blockTypeID) {
-        this.blockTypeID = blockTypeID;
-    }
-
+    /**
+     * Gets the block state from {@code Effect#STEP_SOUND} effect.
+     *
+     * @return The block-type.
+     */
     public Optional<WrappedBlockState> getBlockType() {
-        return Optional.of(WrappedBlockState.getByGlobalId(serverVersion.toClientVersion(), blockTypeID));
-    }
-
-    protected void extraData(boolean read) {
-        if (this.effects == Effect.SMOKE) {
-            if (read) {
-                this.direction = Direction.getByHorizontalIndex(readByte());
-            } else {
-                writeByte(this.direction.getHorizontalIndex());
-            }
-        }
-
-        if (this.effects == Effect.INSTANT_POTION_BREAK || this.effects == Effect.POTION_BREAK) {
-            if (read) {
-                this.rgbColor = readInt();
-            } else {
-                writeInt(this.rgbColor);
-            }
-        }
-
-        if (this.effects == Effect.BONE_MEAL_USE) {
-            if (read) {
-                this.particlesToSpawn = readInt();
-            } else {
-                writeInt(this.particlesToSpawn);
-            }
-        }
-
-        if (this.effects == Effect.ANVIL_BREAK || this.effects == Effect.WITHER_BREAK_BLOCK) {
-            if (read) {
-                this.blockTypeID = readVarInt();
-            } else {
-                writeVarInt(this.blockTypeID);
-            }
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "WrapperPlayServerEffect{" +
-                "effectId=" + effectId +
-                ", effects=" + effects +
-                ", position=" + position +
-                ", data=" + data +
-                ", disableRelativeVolume=" + disableRelativeVolume +
-                ", direction=" + direction +
-                ", rgbColor=" + rgbColor +
-                ", particlesToSpawn=" + particlesToSpawn +
-                ", blockTypeID=" + blockTypeID +
-                '}';
+        return Optional.of(WrappedBlockState.getByGlobalId(serverVersion.toClientVersion(), data));
     }
 }
