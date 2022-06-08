@@ -134,9 +134,9 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
     }
 
     /**
-     * Gets the block-direction from {@code Effect#SMOKE} effect.
+     * Gets the smoke-direction from {@code Effect#SMOKE} effect.
      *
-     * @return The block-direction.
+     * @return The smoke-direction.
      */
     public Optional<Direction> getDirection() {
         return Optional.ofNullable(Direction.getByHorizontalIndex(data));
