@@ -27,6 +27,7 @@ import com.github.retrooper.packetevents.protocol.item.type.ItemTypes;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.protocol.world.Direction;
 import com.github.retrooper.packetevents.protocol.world.states.WrappedBlockState;
+import com.github.retrooper.packetevents.protocol.world.states.enums.Axis;
 import com.github.retrooper.packetevents.util.Vector3i;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import org.jetbrains.annotations.Nullable;
@@ -153,9 +154,18 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
     /**
      * Gets the block state from {@code Effect#STEP_SOUND} effect.
      *
-     * @return The block-type.
+     * @return The block state.
      */
-    public Optional<WrappedBlockState> getBlockType() {
+    public Optional<WrappedBlockState> getBlockState() {
         return Optional.of(WrappedBlockState.getByGlobalId(serverVersion.toClientVersion(), data));
+    }
+
+    /**
+     * Gets the axis from {@code Effect#ELECTRIC_SPARK} effect.
+     *
+     * @return The axis.
+     */
+    public Optional<Axis> getAxis() {
+        return Optional.of(WrappedBlockState.getByGlobalId(serverVersion.toClientVersion(), data).getAxis());
     }
 }
