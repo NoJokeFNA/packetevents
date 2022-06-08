@@ -20,23 +20,28 @@ package com.github.retrooper.packetevents.wrapper.play.server;
 
 import com.github.retrooper.packetevents.event.PacketSendEvent;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
-import com.github.retrooper.packetevents.protocol.effect.type.Effects;
 import com.github.retrooper.packetevents.protocol.effect.type.Effect;
+import com.github.retrooper.packetevents.protocol.effect.type.Effects;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.protocol.world.Direction;
+import com.github.retrooper.packetevents.protocol.world.states.WrappedBlockState;
 import com.github.retrooper.packetevents.util.Vector3i;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
+import java.util.OptionalInt;
 
 public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffect> {
     private int effectId;
-    private @Nullable Direction direction;
     private @Nullable Effects effects;
     private Vector3i position;
     private int data;
     private boolean disableRelativeVolume;
+    private @Nullable Direction direction;
+    private int rgbColor;
+    private int particlesToSpawn;
+    private int blockTypeID;
 
     public WrapperPlayServerEffect(PacketSendEvent event) {
         super(event);
@@ -66,14 +71,12 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
         }
         this.data = readInt();
         this.disableRelativeVolume = readBoolean();
+        extraData(true);
     }
 
     @Override
     public void write() {
         writeInt(this.effectId);
-        if (this.effectId == 2001) {
-            writeByte(this.direction.getHorizontalIndex());
-        }
         if (serverVersion.isNewerThanOrEquals(ServerVersion.V_1_8)) {
             long positionVector = this.position.getSerializedPosition();
             writeLong(positionVector);
@@ -84,6 +87,7 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
         }
         writeInt(this.data);
         writeBoolean(this.disableRelativeVolume);
+        extraData(false);
     }
 
     @Override
@@ -102,20 +106,12 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
         this.effectId = effectId;
     }
 
-    public Optional<Direction> getDirection() {
-        return Optional.ofNullable(direction);
-    }
-
-    public void setDirection(@Nullable Direction direction) {
-        this.direction = direction;
-    }
-
-    public Optional<Effects> getEffectType() {
+    public Optional<Effects> getEffects() {
         return Optional.ofNullable(effects);
     }
 
-    public void setEffectType(@Nullable Effects Effects) {
-        this.effects = Effects;
+    public void setEffects(@Nullable Effects effects) {
+        this.effects = effects;
     }
 
     public Vector3i getPosition() {
@@ -140,5 +136,75 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
 
     public void setDisableRelativeVolume(boolean disableRelativeVolume) {
         this.disableRelativeVolume = disableRelativeVolume;
+    }
+
+    public Optional<Direction> getDirection() {
+        return Optional.ofNullable(direction);
+    }
+
+    public void setDirection(@Nullable Direction direction) {
+        this.direction = direction;
+    }
+
+    public OptionalInt getRgbColor() {
+        return OptionalInt.of(rgbColor);
+    }
+
+    public void setRgbColor(int rgbColor) {
+        this.rgbColor = rgbColor;
+    }
+
+    public OptionalInt getParticlesToSpawn() {
+        return OptionalInt.of(particlesToSpawn);
+    }
+
+    public void setParticlesToSpawn(int particlesToSpawn) {
+        this.particlesToSpawn = particlesToSpawn;
+    }
+
+    public OptionalInt getBlockTypeID() {
+        return OptionalInt.of(blockTypeID);
+    }
+
+    public void setBlockTypeID(int blockTypeID) {
+        this.blockTypeID = blockTypeID;
+    }
+
+    public Optional<WrappedBlockState> getBlockType() {
+        return Optional.of(WrappedBlockState.getByGlobalId(serverVersion.toClientVersion(), blockTypeID));
+    }
+
+    protected void extraData(boolean read) {
+        if (this.effects == Effect.SMOKE) {
+            if (read) {
+                this.direction = Direction.getByHorizontalIndex(readByte());
+            } else {
+                writeByte(this.direction.getHorizontalIndex());
+            }
+        }
+
+        if (this.effects == Effect.INSTANT_POTION_BREAK || this.effects == Effect.POTION_BREAK) {
+            if (read) {
+                this.rgbColor = readInt();
+            } else {
+                writeInt(this.rgbColor);
+            }
+        }
+
+        if (this.effects == Effect.BONE_MEAL_USE) {
+            if (read) {
+                this.particlesToSpawn = readInt();
+            } else {
+                writeInt(this.particlesToSpawn);
+            }
+        }
+
+        if (this.effects == Effect.ANVIL_BREAK || this.effects == Effect.WITHER_BREAK_BLOCK) {
+            if (read) {
+                this.blockTypeID = readVarInt();
+            } else {
+                writeVarInt(this.blockTypeID);
+            }
+        }
     }
 }
