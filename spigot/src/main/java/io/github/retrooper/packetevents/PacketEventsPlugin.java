@@ -85,7 +85,7 @@ public class PacketEventsPlugin extends JavaPlugin {
                 User user = event.getUser();
                 Player player = (Player) event.getPlayer();
                 switch (event.getPacketType()) {
-                    case SYSTEM_CHAT_MESSAGE:
+                    case CHAT_MESSAGE:
                         System.out.println("Running 10 seconds later");
                         WrapperPlayClientChatMessage chatMessage = new WrapperPlayClientChatMessage(event);
                         if (chatMessage.getMessage().equalsIgnoreCase("keyword")) {
@@ -163,7 +163,7 @@ public class PacketEventsPlugin extends JavaPlugin {
                         else if (chatMessage.getMessage().equalsIgnoreCase("copium")) {
                             new Thread(() -> {
                                 Component message = Component.text("Hi lmao");
-                                WrapperPlayServerSystemChatMessage cm = new WrapperPlayServerSystemChatMessage(message, ChatPosition.CHAT);
+                                WrapperPlayServerChatMessage cm = new WrapperPlayServerChatMessage(message, ChatPosition.CHAT);
                                 for (int i = 0; i < 10; i++) {
                                     System.out.println("Sent!");
                                     user.sendPacket(cm);
@@ -230,8 +230,8 @@ public class PacketEventsPlugin extends JavaPlugin {
                         user.sendMessage(ChatColor.RED + "player null, but hi dude!!!");
                     }
                     System.out.println("Pipeline: " + ChannelHelper.pipelineHandlerNamesAsString(event.getChannel()));
-                } else if (event.getPacketType() == PacketType.Play.Server.SYSTEM_CHAT_MESSAGE) {
-                    WrapperPlayServerSystemChatMessage chatMessage = new WrapperPlayServerSystemChatMessage(event);
+                } else if (event.getPacketType() == PacketType.Play.Server.CHAT_MESSAGE) {
+                    WrapperPlayServerChatMessage chatMessage = new WrapperPlayServerChatMessage(event);
                     /*event.setCancelled(true);
                     Object buffer = chatMessage.getBuffer();
                     Object copy = ByteBufHelper.duplicate(buffer);
