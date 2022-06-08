@@ -207,4 +207,19 @@ public class WrapperPlayServerEffect extends PacketWrapper<WrapperPlayServerEffe
             }
         }
     }
+
+    @Override
+    public String toString() {
+        return "WrapperPlayServerEffect{" +
+                "effectId=" + effectId +
+                ", effects=" + effects +
+                ", position=" + position +
+                ", data=" + data +
+                ", disableRelativeVolume=" + disableRelativeVolume +
+                ", direction=" + direction +
+                ", rgbColor=" + rgbColor +
+                ", particlesToSpawn=" + particlesToSpawn +
+                ", blockTypeID=" + blockTypeID +
+                '}';
+    }
 }

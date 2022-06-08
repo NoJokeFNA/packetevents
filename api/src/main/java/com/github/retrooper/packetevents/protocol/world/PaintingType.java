@@ -84,6 +84,4 @@ public enum PaintingType {
     public int getId() {
         return ordinal();
     }
-
-    private static final PaintingType[] VALUES = values();
 }

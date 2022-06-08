@@ -28,7 +28,7 @@ public enum InteractionHand {
     MAIN_HAND,
     OFF_HAND;
 
-    private static final InteractionHand[] VALUES = values();
+    public static final InteractionHand[] VALUES = values();
 
     public int getId() {
         return ordinal();
@@ -36,9 +36,5 @@ public enum InteractionHand {
 
     public static InteractionHand getById(int id) {
         return VALUES[id];
-    }
-
-    public int getId() {
-        return this == MAIN_HAND ? 0 : 1;
     }
 }
