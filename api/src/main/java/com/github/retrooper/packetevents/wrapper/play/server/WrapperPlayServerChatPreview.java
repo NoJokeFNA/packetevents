@@ -4,16 +4,19 @@ import com.github.retrooper.packetevents.event.PacketReceiveEvent;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 public class WrapperPlayServerChatPreview extends PacketWrapper<WrapperPlayServerChatPreview> {
     private int queryID;
-    private Component message;
+    private @Nullable Component message;
 
     public WrapperPlayServerChatPreview(PacketReceiveEvent event) {
         super(event);
     }
 
-    public WrapperPlayServerChatPreview(int queryID, Component message) {
+    public WrapperPlayServerChatPreview(int queryID, @Nullable Component message) {
         super(PacketType.Play.Server.CHAT_PREVIEW_PACKET);
         this.queryID = queryID;
         this.message = message;
@@ -49,11 +52,11 @@ public class WrapperPlayServerChatPreview extends PacketWrapper<WrapperPlayServe
         this.queryID = queryID;
     }
 
-    public Component getMessage() {
-        return message;
+    public Optional<Component> getMessage() {
+        return Optional.ofNullable(message);
     }
 
-    public void setMessage(Component message) {
+    public void setMessage(@Nullable Component message) {
         this.message = message;
     }
 }
