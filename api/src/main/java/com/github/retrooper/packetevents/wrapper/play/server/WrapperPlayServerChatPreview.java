@@ -1,6 +1,6 @@
 package com.github.retrooper.packetevents.wrapper.play.server;
 
-import com.github.retrooper.packetevents.event.PacketReceiveEvent;
+import com.github.retrooper.packetevents.event.PacketSendEvent;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import net.kyori.adventure.text.Component;
@@ -12,7 +12,7 @@ public class WrapperPlayServerChatPreview extends PacketWrapper<WrapperPlayServe
     private int queryID;
     private @Nullable Component message;
 
-    public WrapperPlayServerChatPreview(PacketReceiveEvent event) {
+    public WrapperPlayServerChatPreview(PacketSendEvent event) {
         super(event);
     }
 

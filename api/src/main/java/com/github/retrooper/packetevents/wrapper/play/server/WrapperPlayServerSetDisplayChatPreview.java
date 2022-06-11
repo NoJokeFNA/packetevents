@@ -1,13 +1,13 @@
 package com.github.retrooper.packetevents.wrapper.play.server;
 
-import com.github.retrooper.packetevents.event.PacketReceiveEvent;
+import com.github.retrooper.packetevents.event.PacketSendEvent;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 
 public class WrapperPlayServerSetDisplayChatPreview extends PacketWrapper<WrapperPlayServerSetDisplayChatPreview> {
     private boolean chatPreviewDisplay;
 
-    public WrapperPlayServerSetDisplayChatPreview(PacketReceiveEvent event) {
+    public WrapperPlayServerSetDisplayChatPreview(PacketSendEvent event) {
         super(event);
     }
 
