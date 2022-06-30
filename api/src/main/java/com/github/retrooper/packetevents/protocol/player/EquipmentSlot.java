@@ -19,7 +19,12 @@
 package com.github.retrooper.packetevents.protocol.player;
 
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Range;
+
+import java.util.Arrays;
+import java.util.Optional;
 
 public enum EquipmentSlot {
     MAINHAND(0),
@@ -34,19 +39,50 @@ public enum EquipmentSlot {
     private final byte legacyId;
 
     EquipmentSlot(int legacyId) {
-        this.legacyId =(byte) legacyId;
+        this.legacyId = (byte) legacyId;
     }
 
+    /**
+     * Gets the legacy id, or the modern id, depending on the server version.
+     * The legacy id is being returned on server versions below or equals 1.9.
+     *
+     * @param version The server version.
+     * @return The legacy id, or the modern id, depending on the server version.
+     */
     public int getId(ServerVersion version) {
         if (version.isOlderThan(ServerVersion.V_1_9)) {
             return legacyId;
-        }
-        else {
+        } else {
             return ordinal();
         }
     }
 
+    /**
+     * Get the EquipmentSlot from the given id.
+     * This method only returns `null` if the id is not valid.
+     *
+     * @param version The version of the server.
+     * @param id      The id of the EquipmentSlot.
+     * @return The EquipmentSlot from the given id.
+     */
+    public static Optional<EquipmentSlot> byId(ServerVersion version, @Range(from = 0, to = 4) int id) {
+        // This is O(1)
+        return Arrays.stream(VALUES)
+                .filter(jointType -> jointType.getId(version) == id)
+                .findFirst();
+    }
+
+    /**
+     * Gets the EquipmentSlot from the given id.
+     *
+     * @param version The version of the server.
+     * @param id      The id of the EquipmentSlot.
+     * @return The EquipmentSlot from the given id.
+     * @deprecated Use {@link #getById(ServerVersion, int)} instead.
+     */
     @Nullable
+    @Deprecated
+    @ApiStatus.ScheduledForRemoval(inVersion = "2.0-RELEASE")
     public static EquipmentSlot getById(ServerVersion version, int id) {
         // FIXME: try making this O(1)
         for (EquipmentSlot slot : VALUES) {
