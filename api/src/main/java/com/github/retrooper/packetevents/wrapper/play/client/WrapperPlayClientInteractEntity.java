@@ -58,11 +58,6 @@ public class WrapperPlayClientInteractEntity extends PacketWrapper<WrapperPlayCl
 
     @Override
     public void read() {
-        this.entityId = readMultiVersional(MultiVersion.EQUALS, ServerVersion.V_1_7_10,
-                PacketWrapper::readInt,
-                PacketWrapper::readVarInt);
-
-        // Haven't tested this method yet
         readMulti(MultiVersion.EQUALS, ServerVersion.V_1_7_10,
                 wrapper -> {
                     this.entityId = wrapper.readInt();
@@ -105,18 +100,18 @@ public class WrapperPlayClientInteractEntity extends PacketWrapper<WrapperPlayCl
                             target = new Vector3f(0.0F, 0.0F, 0.0F);
                         }
                         Vector3f targetVec = target;
-                        writeFloat(targetVec.x);
-                        writeFloat(targetVec.y);
-                        writeFloat(targetVec.z);
+                        packetWrapper.writeFloat(targetVec.x);
+                        packetWrapper.writeFloat(targetVec.y);
+                        packetWrapper.writeFloat(targetVec.z);
                     }
 
                     if (serverVersion.isNewerThanOrEquals(ServerVersion.V_1_9) &&
                             (interactAction == InteractAction.INTERACT || interactAction == InteractAction.INTERACT_AT)) {
-                        writeVarInt(interactionHand.getId());
+                        packetWrapper.writeVarInt(interactionHand.getId());
                     }
 
                     if (serverVersion.isNewerThanOrEquals(ServerVersion.V_1_16)) {
-                        writeBoolean(sneaking);
+                        packetWrapper.writeBoolean(sneaking);
                     }
                 });
     }
