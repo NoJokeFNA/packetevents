@@ -86,7 +86,6 @@ public class WrapperPlayServerOpenWindow extends PacketWrapper<WrapperPlayServer
             this.title = readString(32);
             this.legacySlots = readUnsignedByte();
             this.useProvidedWindowTitle = readBoolean();
-
             if (this.type == 11) { // AnimalChest type ID
                 this.horseId = readInt();
             }
@@ -121,7 +120,6 @@ public class WrapperPlayServerOpenWindow extends PacketWrapper<WrapperPlayServer
             writeString(this.title);
             writeByte(this.legacySlots);
             writeBoolean(this.useProvidedWindowTitle);
-
             if (this.type == 11) { // AnimalChest type ID
                 writeInt(this.horseId);
             }

@@ -53,23 +53,25 @@ public class WrapperPlayClientPlayerAbilities extends PacketWrapper<WrapperPlayC
     @Override
     public void read() {
         byte mask = readByte();
-        readMulti(MultiVersion.NEWER_THAN_OR_EQUALS, ServerVersion.V_1_16, packetWrapper -> flying = (mask & 0x02) != 0, packetWrapper -> {
-            godMode = (mask & 0x01) != 0;
-            flying = (mask & 0x02) != 0;
-            flightAllowed = (mask & 0x04) != 0;
-            creativeMode = (mask & 0x08) != 0;
-            flySpeed = readFloat();
-            walkSpeed = readFloat();
-        });
+        readMulti(MultiVersion.NEWER_THAN_OR_EQUALS, ServerVersion.V_1_16,
+                packetWrapper -> flying = (mask & 0x02) != 0,
+                packetWrapper -> {
+                    godMode = (mask & 0x01) != 0;
+                    flying = (mask & 0x02) != 0;
+                    flightAllowed = (mask & 0x04) != 0;
+                    creativeMode = (mask & 0x08) != 0;
+                    flySpeed = packetWrapper.readFloat();
+                    walkSpeed = packetWrapper.readFloat();
+                });
     }
 
     @Override
     public void write() {
         byte mask = (byte) (flying ? 0x02 : 0x00);
         writeMultiVersional(MultiVersion.NEWER_THAN_OR_EQUALS, ServerVersion.V_1_16, mask,
-                (packetWrapper, aByte) -> writeByte(aByte),
+                PacketWrapper::writeByte,
                 (packetWrapper, aByte) -> {
-                    byte maskNew = aByte.byteValue();
+                    byte maskNew;
                     maskNew = 0x00;
                     if (godMode) {
                         maskNew |= 0x01;
@@ -86,10 +88,10 @@ public class WrapperPlayClientPlayerAbilities extends PacketWrapper<WrapperPlayC
                     if (creativeMode) {
                         maskNew |= 0x08;
                     }
-                    writeByte(maskNew);
+                    packetWrapper.writeByte(maskNew);
                     // These are my guesses of default values, don't cry, just pass in the fly/walk speed next time :0
-                    writeFloat(flySpeed == 0.0F ? 0.1F : flySpeed);
-                    writeFloat(walkSpeed == 0.0F ? 0.2F : walkSpeed);
+                    packetWrapper.writeFloat(flySpeed == 0.0F ? 0.1F : flySpeed);
+                    packetWrapper.writeFloat(walkSpeed == 0.0F ? 0.2F : walkSpeed);
                 });
     }
 

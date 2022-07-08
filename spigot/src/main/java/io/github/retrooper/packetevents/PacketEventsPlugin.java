@@ -20,17 +20,14 @@ package io.github.retrooper.packetevents;
 
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.event.*;
-import com.github.retrooper.packetevents.event.simple.PacketLoginSendEvent;
 import com.github.retrooper.packetevents.event.simple.PacketPlayReceiveEvent;
 import com.github.retrooper.packetevents.event.simple.PacketPlaySendEvent;
-import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.protocol.player.DiggingAction;
 import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.protocol.world.BlockFace;
 import com.github.retrooper.packetevents.protocol.world.Location;
 import com.github.retrooper.packetevents.util.TimeStampMode;
 import com.github.retrooper.packetevents.util.Vector3i;
-import com.github.retrooper.packetevents.wrapper.login.server.WrapperLoginServerEncryptionRequest;
 import com.github.retrooper.packetevents.wrapper.play.client.*;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import net.kyori.adventure.text.Component;
@@ -96,6 +93,7 @@ public class PacketEventsPlugin extends JavaPlugin {
                     case PLAYER_DIGGING:
                         WrapperPlayClientPlayerDigging digging = new WrapperPlayClientPlayerDigging(event);
                         DiggingAction action = digging.getAction();
+                        user.sendMessage(ChatColor.RED + "Action: " + action.name());
                         break;
                     case PLAYER_BLOCK_PLACEMENT:
                         WrapperPlayClientPlayerBlockPlacement blockPlacement = new WrapperPlayClientPlayerBlockPlacement(event);
@@ -112,6 +110,7 @@ public class PacketEventsPlugin extends JavaPlugin {
                                 .color(NamedTextColor.RED)
                                 .append(Component.text(" Data: " + brandData)
                                         .color(NamedTextColor.GOLD));
+                        user.sendMessage(component);
                         break;
                     case STEER_VEHICLE:
                         WrapperPlayClientSteerVehicle steerVehicle = new WrapperPlayClientSteerVehicle(event);
@@ -122,6 +121,15 @@ public class PacketEventsPlugin extends JavaPlugin {
                     case UPDATE_SIGN:
                         WrapperPlayClientUpdateSign sign = new WrapperPlayClientUpdateSign(event);
                         user.sendMessage("Sign is " + sign.getBlockPosition());
+                        break;
+                    case KEEP_ALIVE:
+                        WrapperPlayClientKeepAlive keepAlive = new WrapperPlayClientKeepAlive(event);
+                        long id = keepAlive.getId();
+                        user.sendMessage(ChatColor.GOLD + "Keep alive id: " + id);
+                        break;
+                    case INTERACT_ENTITY:
+                        WrapperPlayClientInteractEntity interactEntity = new WrapperPlayClientInteractEntity(event);
+                        System.out.println(interactEntity);
                         break;
                     default:
                         break;
@@ -176,7 +184,7 @@ public class PacketEventsPlugin extends JavaPlugin {
                 System.out.println("User: (host-name) " + event.getUser().getAddress().getHostString() + " disconnected...");
             }
         };
-        //PacketEvents.getAPI().getEventManager().registerListener(listener);
+        PacketEvents.getAPI().getEventManager().registerListener(listener);
     }
 
     @Override

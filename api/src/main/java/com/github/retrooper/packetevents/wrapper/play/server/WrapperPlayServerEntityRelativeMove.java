@@ -29,7 +29,7 @@ public class WrapperPlayServerEntityRelativeMove extends PacketWrapper<WrapperPl
     private static double MODERN_DELTA_DIVISOR = 4096.0;
     // (Byte.MAX_VALUE + 1) / 4.0
     private static double LEGACY_DELTA_DIVISOR = 32.0;
-    private int entityID;
+    private int entityId;
     private double deltaX;
     private double deltaY;
     private double deltaZ;
@@ -39,9 +39,9 @@ public class WrapperPlayServerEntityRelativeMove extends PacketWrapper<WrapperPl
         super(event);
     }
 
-    public WrapperPlayServerEntityRelativeMove(int entityID, double deltaX, double deltaY, double deltaZ, boolean onGround) {
+    public WrapperPlayServerEntityRelativeMove(int entityId, double deltaX, double deltaY, double deltaZ, boolean onGround) {
         super(PacketType.Play.Server.ENTITY_RELATIVE_MOVE);
-        this.entityID = entityID;
+        this.entityId = entityId;
         this.deltaX = deltaX;
         this.deltaY = deltaY;
         this.deltaZ = deltaZ;
@@ -50,7 +50,7 @@ public class WrapperPlayServerEntityRelativeMove extends PacketWrapper<WrapperPl
 
     @Override
     public void read() {
-        entityID = readVarInt();
+        entityId = readVarInt();
         readMulti(MultiVersion.NEWER_THAN_OR_EQUALS, ServerVersion.V_1_9,
                 packetWrapper -> {
                     deltaX = packetWrapper.readShort() / MODERN_DELTA_DIVISOR;
@@ -66,7 +66,7 @@ public class WrapperPlayServerEntityRelativeMove extends PacketWrapper<WrapperPl
 
     @Override
     public void write() {
-        writeVarInt(entityID);
+        writeVarInt(entityId);
         if (serverVersion.isNewerThanOrEquals(ServerVersion.V_1_9)) {
             writeShort((short) (deltaX * MODERN_DELTA_DIVISOR));
             writeShort((short) (deltaY * MODERN_DELTA_DIVISOR));
@@ -81,7 +81,7 @@ public class WrapperPlayServerEntityRelativeMove extends PacketWrapper<WrapperPl
 
     @Override
     public void copy(WrapperPlayServerEntityRelativeMove wrapper) {
-        entityID = wrapper.entityID;
+        entityId = wrapper.entityId;
         deltaX = wrapper.deltaX;
         deltaY = wrapper.deltaY;
         deltaZ = wrapper.deltaZ;
@@ -89,11 +89,11 @@ public class WrapperPlayServerEntityRelativeMove extends PacketWrapper<WrapperPl
     }
 
     public int getEntityId() {
-        return entityID;
+        return entityId;
     }
 
     public void setEntityId(int entityID) {
-        this.entityID = entityID;
+        this.entityId = entityID;
     }
 
     public double getDeltaX() {
