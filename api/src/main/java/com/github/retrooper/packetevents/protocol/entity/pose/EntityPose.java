@@ -31,12 +31,16 @@ public enum EntityPose {
     DYING,
     CROAKING,
     USING_TONGUE,
+    SITTING,
     ROARING,
     SNIFFING,
     EMERGING,
     DIGGING;
 
    public int getId(ClientVersion version) {
+       if (this == ROARING && version.isOlderThan(ClientVersion.V_1_19_3)) {
+           return 10;
+       }
        if (this == DYING && version.isOlderThan(ClientVersion.V_1_17)) {
            return 6;
        }
@@ -44,6 +48,10 @@ public enum EntityPose {
    }
 
    public static EntityPose getById(ClientVersion version, int id) {
+       // The SITTING pose was added in 1.19.3, shifting things by 1
+       if (id == 10 && version.isOlderThan(ClientVersion.V_1_19_3)) {
+           return ROARING;
+       }
        // The LONG_JUMPING pose was added in 1.17, shifting things by 1
        if (id == 6 && version.isOlderThan(ClientVersion.V_1_17)) {
            return DYING;
